@@ -1,1 +1,124 @@
-dsd
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FRED — Weather, live</title>
+<meta name="description" content="FRED is a weather chat bot that streams live on YouTube. Severe weather, forecasts, and answers to whatever you type in chat.">
+<meta property="og:title" content="FRED — Weather, live">
+<meta property="og:description" content="A weather chat bot that streams on YouTube. @FredWeatherAI">
+<meta property="og:image" content="og.png">
+<link rel="icon" href="fred.svg" type="image/svg+xml">
+<style>
+:root{
+  --bg:#f4f1ea; --ink:#1b1b19; --mute:#6b685f; --rule:#d9d4c7; --panel:#ebe7dc; --accent:#c4561a;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#141412; --ink:#ece8dd; --mute:#948f82; --rule:#2e2d28; --panel:#1b1b18; --accent:#e47a3c;}
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px}
+.mono{font-family:ui-monospace,"SF Mono",Consolas,Menlo,monospace;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+header{border-bottom:1px solid var(--rule)}
+header .wrap{display:flex;justify-content:space-between;align-items:center;height:60px}
+.brand{font-weight:700;letter-spacing:.14em;text-decoration:none;font-family:ui-monospace,Consolas,monospace;font-size:.95rem}
+nav a{margin-left:22px;text-decoration:none;color:var(--mute);font-size:.92rem}
+nav a:hover{color:var(--ink)}
+.hero{padding:84px 0 72px;display:grid;grid-template-columns:1fr 200px;gap:48px;align-items:center}
+h1{font-size:clamp(2.4rem,6vw,3.9rem);line-height:1.05;margin:14px 0 22px;font-weight:600;letter-spacing:-.02em}
+.lede{font-size:1.2rem;color:var(--mute);max-width:34ch;margin:0 0 30px}
+.btn{display:inline-block;padding:12px 20px;border:1px solid var(--ink);text-decoration:none;font-family:ui-monospace,Consolas,monospace;font-size:.85rem;letter-spacing:.04em}
+.btn.solid{background:var(--ink);color:var(--bg)}
+.btn:hover{border-color:var(--accent);background:var(--accent);color:#fff}
+.btn+.btn{margin-left:10px}
+.portrait{width:200px;height:200px;border-radius:50%;border:1px solid var(--rule)}
+section{padding:64px 0;border-top:1px solid var(--rule)}
+h2{font-size:1.7rem;margin:0 0 8px;font-weight:600;letter-spacing:-.01em}
+.sub{color:var(--mute);margin:0 0 36px;max-width:52ch}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:1px solid var(--rule)}
+.item{padding:24px 28px 26px 0;border-bottom:1px solid var(--rule)}
+.item:nth-child(even){padding-left:28px;padding-right:0;border-left:1px solid var(--rule)}
+.item h3{margin:0 0 6px;font-size:1.05rem;font-weight:700}
+.item p{margin:0;color:var(--mute);font-size:.98rem}
+.chat{background:var(--panel);border:1px solid var(--rule);padding:22px 24px;font-family:ui-monospace,Consolas,monospace;font-size:.88rem;line-height:1.7;max-width:560px}
+.chat b{color:var(--accent);font-weight:600}
+.chat .u{color:var(--mute)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.two p{margin:0 0 14px}
+footer{border-top:1px solid var(--rule);padding:30px 0 50px;color:var(--mute);font-size:.85rem}
+footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent);margin-right:8px;vertical-align:middle}
+@media(max-width:720px){
+  .hero{grid-template-columns:1fr;padding:48px 0}
+  .portrait{width:120px;height:120px;order:-1}
+  .grid{grid-template-columns:1fr}
+  .item,.item:nth-child(even){padding:22px 0;border-left:0}
+  .two{grid-template-columns:1fr;gap:8px}
+  nav a{margin-left:14px}
+  .btn+.btn{margin:10px 0 0}
+}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <a class="brand" href="#">FRED</a>
+  <nav><a href="#what">What he does</a><a href="#chat">Chat</a><a href="#watch">Watch</a></nav>
+</div></header>
+
+<main class="wrap">
+  <div class="hero">
+    <div>
+      <div class="mono"><span class="dot"></span>Streaming on YouTube</div>
+      <h1>A weather chat bot that's on the air.</h1>
+      <p class="lede">FRED watches the sky around the clock, talks through what's happening, and answers when you ask him something.</p>
+      <a class="btn solid" href="https://www.youtube.com/@FredWeatherAI" target="_blank" rel="noopener">Watch @FredWeatherAI</a>
+      <a class="btn" href="https://www.youtube.com/@FredWeatherAI/live" target="_blank" rel="noopener">Go to the live stream</a>
+    </div>
+    <img class="portrait" src="fred.svg" alt="FRED, a small round-headed robot with yellow eyes">
+  </div>
+
+  <section id="what">
+    <h2>What FRED does</h2>
+    <p class="sub">He's a host, not a dashboard. Plain-spoken, a little dry, and always pointed at whatever the weather is doing right now.</p>
+    <div class="grid">
+      <div class="item"><h3>Severe weather coverage</h3><p>Tornado, severe thunderstorm and flood warnings get called out as they happen, with the places in the path.</p></div>
+      <div class="item"><h3>Live radar</h3><p>The map is always up, and FRED talks you through what the storms on it are doing.</p></div>
+      <div class="item"><h3>Local forecasts</h3><p>Ask for your town and he'll put together a forecast on air, with the times it was issued so you know how fresh it is.</p></div>
+      <div class="item"><h3>Outlooks and the bigger picture</h3><p>Where the next few days are setting up, and why one region is quiet while another isn't.</p></div>
+      <div class="item"><h3>Tropics and outages</h3><p>Hurricane season updates, plus where the power is going out when the weather turns.</p></div>
+      <div class="item"><h3>Quiet-day material</h3><p>When nothing's happening he doesn't go silent. Weather lessons, live landmark cameras, and the occasional nap.</p></div>
+    </div>
+  </section>
+
+  <section id="chat">
+    <div class="two">
+      <div>
+        <h2>You can talk to him</h2>
+        <p class="sub" style="margin-bottom:14px">Stream chat is how FRED knows what people want to hear about. Ask a question, request your town, or just say hi.</p>
+        <p style="color:var(--mute);font-size:.98rem">He remembers regulars and gives them a hard time about it.</p>
+      </div>
+      <div class="chat" aria-label="Example chat">
+        <div><span class="u">viewer:</span> fred forecast for Lexington</div>
+        <div><b>FRED:</b> Pulling that up. Give me a minute while I look it over.</div>
+        <div style="margin-top:10px"><span class="u">viewer:</span> is it going to rain tonight?</div>
+        <div><b>FRED:</b> I'll tell you what the data says, then what I'd bring.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="watch">
+    <h2>Where to find him</h2>
+    <p class="sub">FRED streams on YouTube. Subscribe so you get the alert when he goes live, and drop into chat when the weather gets interesting.</p>
+    <a class="btn solid" href="https://www.youtube.com/@FredWeatherAI" target="_blank" rel="noopener">youtube.com/@FredWeatherAI</a>
+  </section>
+</main>
+
+<footer><div class="wrap">
+  <span>FRED is an AI. Don't rely on him for safety decisions. For warnings and emergencies, use the National Weather Service and your local officials.</span>
+  <span>&copy; 2026 FRED</span>
+</div></footer>
+</body>
+</html>
