@@ -60,12 +60,31 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
   nav a{margin-left:14px}
   .btn+.btn{margin:10px 0 0}
 }
+
+.tag{display:inline-block;border:1px solid var(--accent);color:var(--accent);padding:4px 10px;font-family:ui-monospace,Consolas,monospace;font-size:.75rem;letter-spacing:.04em;margin-bottom:14px}
+.shot{width:100%;height:auto;border:1px solid var(--rule);display:block;margin:28px 0 8px}
+.cap{color:var(--mute);font-size:.88rem;margin:0 0 28px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));border-top:1px solid var(--rule);border-left:1px solid var(--rule);margin:0 0 12px}
+.tile{padding:18px 20px;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.tile b{display:block;font-family:ui-monospace,Consolas,monospace;font-size:1.5rem;color:var(--accent);font-weight:600}
+.tile span{color:var(--mute);font-size:.88rem}
+.check{display:grid;grid-template-columns:minmax(240px,340px) 1fr;gap:36px;align-items:start;margin:20px 0}
+svg.rel{width:100%;height:auto;background:var(--panel);border:1px solid var(--rule)}
+svg.rel text{fill:var(--mute);font:10px ui-monospace,Consolas,monospace}
+svg.rel .g{stroke:var(--rule)} svg.rel .diag{stroke:var(--mute);stroke-dasharray:4 4} svg.rel circle{fill:var(--accent)}
+table.sk{border-collapse:collapse;width:100%;font-size:.95rem;margin:0 0 14px}
+table.sk th,table.sk td{padding:8px 10px;border-bottom:1px solid var(--rule);text-align:right}
+table.sk th:first-child,table.sk td:first-child{text-align:left}
+table.sk td+td{font-family:ui-monospace,Consolas,monospace}
+.limits{border-left:3px solid var(--accent);background:var(--panel);padding:6px 22px 6px 36px;margin:0}
+.limits li{margin:9px 0}
+@media(max-width:720px){.check{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <header><div class="wrap">
   <a class="brand" href="#">FRED</a>
-  <nav><a href="#what">What he does</a><a href="#chat">Chat</a><a href="#watch">Watch</a></nav>
+  <nav><a href="#what">What he does</a><a href="#kynet">KY-Net</a><a href="#chat">Chat</a><a href="#watch">Watch</a></nav>
 </div></header>
 
 <main class="wrap">
@@ -91,6 +110,38 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
       <div class="item"><h3>Tropics and outages</h3><p>Hurricane season updates, plus where the power is going out when the weather turns.</p></div>
       <div class="item"><h3>Quiet-day material</h3><p>When nothing's happening he doesn't go silent. Weather lessons, live landmark cameras, and the occasional nap.</p></div>
     </div>
+  </section>
+
+  <section id="kynet">
+    <span class="tag">EXPERIMENTAL - NOT AN OFFICIAL FORECAST - NOT FOR SAFETY DECISIONS</span>
+    <h2>KY-Net</h2>
+    <p class="sub">A small model that downscales GFS into a 5-day Kentucky reflectivity and tornado-chance outlook.</p>
+    <img class="shot" src="ky-net.webp" width="1300" height="706" alt="KY-Net viewer showing reflectivity and convective-day tornado chance over Kentucky and neighbouring states">
+    <p class="cap">The viewer, showing a past case (GFS cycle 2025-04-01 00Z, valid 2025-04-02). It illustrates the interface, not skill: the case may have been in the training data.</p>
+    <p>KY-Net takes coarse output from NOAA's GFS and produces a 3 km (0.03 degree) grid over Kentucky and its neighbours (35.0-40.5 N, 91.0-80.4 W). The outlook runs 5 days in 3-hour steps and carries a reflectivity layer and a tornado-chance layer. The viewer shows reflectivity, tornado chance (3-hour or convective-day), the chance of 35+ dBZ and raw GFS for comparison on one synced timeline.</p>
+    <div class="tiles"><div class="tile"><b>2,078</b><span>training pairs</span></div><div class="tile"><b>0.65 M</b><span>parameters</span></div><div class="tile"><b>2.6 MB</b><span>weights file</span></div><div class="tile"><b>8 min</b><span>training, one consumer GPU</span></div><div class="tile"><b>36</b><span>held-out days, 19 with tornadoes</span></div><div class="tile"><b>3 km</b><span>352 x 184 grid, 5 days in 40 frames</span></div></div>
+    <p class="cap">A full 5-day product is a few MB. Once the GFS data is downloaded, running the network for a whole forecast took about 2 seconds; the download dominates.</p>
+    <h3>How it was checked</h3>
+    <p>On 864 forecast/analysis pairs from 36 whole days the network never saw (19 had tornadoes in the grid), against HRRR analyses and SPC tornado reports. Scores are Brier skill against climatology: above 0 beats always forecasting the base rate.</p>
+    <div class="check"><svg class="rel" viewBox="0 0 360 372" role="img" aria-label="Forecast daily tornado chance versus observed frequency"><line class="diag" x1="40.0" y1="340.0" x2="340.0" y2="40.0"/><line class="g" x1="40" x2="340" y1="340.0" y2="340.0"/><text x="34" y="344.0" text-anchor="end">0%</text><text x="40.0" y="358" text-anchor="middle">0%</text><line class="g" x1="40" x2="340" y1="240.0" y2="240.0"/><text x="34" y="244.0" text-anchor="end">10%</text><text x="140.0" y="358" text-anchor="middle">10%</text><line class="g" x1="40" x2="340" y1="140.0" y2="140.0"/><text x="34" y="144.0" text-anchor="end">20%</text><text x="240.0" y="358" text-anchor="middle">20%</text><line class="g" x1="40" x2="340" y1="40.0" y2="40.0"/><text x="34" y="44.0" text-anchor="end">30%</text><text x="340.0" y="358" text-anchor="middle">30%</text><circle cx="41.1" cy="338.9" r="5"/><text x="50.1" y="330.9">n=6,174,889</text><circle cx="70.6" cy="285.9" r="5"/><text x="79.6" y="299.9">n=296,699</text><circle cx="112.9" cy="226.2" r="5"/><text x="121.9" y="218.2">n=156,461</text><circle cx="165.8" cy="211.0" r="5"/><text x="174.8" y="225.0">n=116,662</text><circle cx="190.0" cy="213.2" r="5"/><text x="199.0" y="205.2">n=250,233</text><text x="190" y="372" text-anchor="middle">forecast chance</text><text x="10" y="190" transform="rotate(-90 10 190)" text-anchor="middle">observed frequency</text></svg><div>
+      <p style="margin-top:0"><b>Daily tornado chance</b> (within 25 miles, 12Z-12Z day), out-of-fold calibration on the held-out days.</p>
+      <table class="sk"><tr><th>Lead</th><th>Brier skill</th></tr><tr><td>Day 1</td><td>0.077</td></tr><tr><td>Day 3</td><td>0.079</td></tr><tr><td>Day 5</td><td>0.054</td></tr><tr><td>All leads</td><td>0.070</td></tr></table>
+      <p class="cap">Chart: forecast chance against how often a tornado was observed, per bin (n = samples in the bin). The dashed line is perfect reliability.</p></div></div>
+    <table class="sk"><tr><th>Reflectivity, Brier skill</th><th>Day 1</th><th>Day 3</th><th>Day 5</th></tr>
+      <tr><td>25 dBZ</td><td>0.108</td><td>0.042</td><td>0.013</td></tr>
+      <tr><td>35 dBZ</td><td>0.017</td><td>0.012</td><td>0.005</td></tr></table>
+    <h3>Honest limits</h3>
+    <ul class="limits">
+      <li>Few events: only 19 tornado days in the check. The numbers are noisy.</li>
+      <li>Tornado probabilities above about 15% were overconfident in testing, so a daily chance is never shown above 15%.</li>
+      <li>On neighbourhood overlap (fractions skill score, 33 km) of 25 dBZ reflectivity at day 1, raw GFS scored higher (0.46) than thresholded KY-Net maps (0.25, at a 25% probability cut). KY-Net's advantage is calibrated probabilities, not a sharper storm picture.</li>
+      <li>Reflectivity at days 3-5 is a statistical picture of where storms are possible, not a prediction of individual cells.</li>
+      <li>The reflectivity layer is derived from probabilities, not a physics simulation.</li>
+      <li>Trained on a limited sample of days (2021-2025) and one GFS version; behaviour in other regimes is unknown.</li>
+      <li>It was not compared with HRRR forecasts.</li>
+      <li>Experimental. Not an official forecast. Do not use it for safety decisions.</li>
+    </ul>
+    <p class="cap" style="margin-top:18px">Data: NOAA GFS and HRRR (NOAA open data on AWS), Storm Prediction Center storm reports, Esri basemap tiles in the screenshot. Not affiliated with or endorsed by any of them.</p>
   </section>
 
   <section id="chat">
