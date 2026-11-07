@@ -24,7 +24,8 @@
 <section class="page">
     <span class="tag">EXPERIMENTAL - NOT AN OFFICIAL FORECAST - NOT FOR SAFETY DECISIONS</span>
     <h2>KY-Net</h2>
-    <p class="sub">A small model that downscales GFS into a 5-day Kentucky reflectivity and tornado-chance outlook.</p>
+    <p class="sub">A small model that downscales GFS into a 5-day Kentucky reflectivity and tornado-chance outlook. The live viewer shows the most recent published run and warns when it is out of date.</p>
+    <p style="margin:0 0 18px"><a class="btn solid" href="kynet-viewer.html">Open the live viewer</a></p>
     <img class="shot" src="ky-net.webp" width="1300" height="706" alt="KY-Net viewer showing reflectivity and convective-day tornado chance over Kentucky and neighbouring states">
     <p class="cap">The viewer, showing a past case (GFS cycle 2025-04-01 00Z, valid 2025-04-02). It illustrates the interface, not skill: the case may have been in the training data.</p>
     <p>KY-Net takes coarse output from NOAA's GFS and produces a 3 km (0.03 degree) grid over Kentucky and its neighbours (35.0-40.5 N, 91.0-80.4 W). The outlook runs 5 days in 3-hour steps and carries a reflectivity layer and a tornado-chance layer. The viewer shows reflectivity, tornado chance (3-hour or convective-day), the chance of 35+ dBZ and raw GFS for comparison on one synced timeline.</p>
