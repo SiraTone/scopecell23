@@ -14,7 +14,7 @@ header .wrap{display:flex;justify-content:space-between;align-items:center;heigh
 nav a{margin-left:22px;text-decoration:none;color:var(--mute);font-size:.92rem}
 nav a:hover,nav a.on{color:var(--accent)}
 .hero{padding:76px 0 56px;display:grid;grid-template-columns:1.05fr 1fr;gap:44px;align-items:center}
-h1,h2,h3{font-family:var(--serif);font-optical-sizing:auto}
+h1,h2,h3{font-family:var(--sans);letter-spacing:-.02em}
 h1{font-size:clamp(2.5rem,6vw,4.1rem);line-height:1.02;margin:14px 0 20px;font-weight:600;letter-spacing:-.02em}
 h1 em{font-style:normal;color:var(--accent)}
 .lede{font-size:1.15rem;color:var(--mute);max-width:36ch;margin:0 0 28px}
