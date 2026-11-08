@@ -1,0 +1,30 @@
+/* nowcast page; base look comes from kynet-viewer.css */
+#side .big { font: 600 18px var(--mono); }
+#side .small { font-size: 11px; margin-top: 6px; }
+#srcInfo { margin-top: 6px; font-size: 12px; }
+#vTab { width: 100%; border-collapse: collapse; font: 12px var(--mono); }
+#vTab th, #vTab td { padding: 3px 4px; text-align: right; border-bottom: 1px solid var(--line); }
+#vTab th:first-child, #vTab td:first-child { text-align: left; color: var(--muted); }
+#vTab td.good { color: var(--accent); } #vTab td.ok { color: #ffd23f; } #vTab td.low { color: var(--warn); }
+#probeCv { width: 100%; height: 90px; margin-top: 6px; }
+.btn { background: #1b2a3f; border: 1px solid var(--line); border-radius: 6px; padding: 6px 12px; cursor: pointer; }
+.btn:hover { border-color: var(--accent); }
+#bar { position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%); z-index: 800; display: flex; align-items: center; gap: 12px;
+  background: rgba(13,21,32,.94); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; width: min(760px, 94%); }
+#slider { flex: 1; min-width: 0; accent-color: var(--accent); }
+#opacity { width: 80px; accent-color: var(--accent); }
+#tLabel { font: 600 13px var(--mono); min-width: 210px; text-align: center; }
+#tLabel .fc { color: var(--accent); } #tLabel .ob { color: #ffd23f; }
+#legend { display: flex; align-items: center; font: 11px var(--mono); padding: 6px 8px; }
+#legend i { display: inline-block; width: 22px; height: 10px; }
+#legend span { margin: 0 6px; color: var(--muted); }
+#msg { position: absolute; left: 50%; top: 40%; transform: translate(-50%, -50%); z-index: 900; background: rgba(13,21,32,.96);
+  border: 1px solid var(--line); border-radius: 10px; padding: 14px 18px; max-width: 420px; text-align: center; }
+@media (max-width: 800px) {
+  #side { display: none; }
+  #bar { flex-wrap: wrap; gap: 8px; bottom: 10px; }
+  #slider { order: 3; flex-basis: 100%; }
+  #tLabel { min-width: 0; flex: 1; text-align: left; font-size: 12px; }
+  #opacity { width: 64px; }
+  #legend { top: 8px; right: 8px; }
+}

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KyCast nowcast</title>
+<meta name="description" content="KyCast nowcast: a live 0-2 hour radar forecast for Kentucky, rebuilt from NOAA MRMS radar every few minutes. Not an official forecast.">
+<link rel="icon" href="kycast.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="kynet-viewer.css">
+<link rel="stylesheet" href="kynet-nowcast.css">
+</head>
+<body>
+<header id="top">
+  <div id="brand"><span class="mark"></span><b>KYCAST</b><i>Nowcast 0-2 h</i></div>
+  <nav id="views"><a href="kynet-viewer.html">5-day forecast</a><a class="on" href="kynet-nowcast.html">Nowcast 0-2 h</a></nav>
+  <a id="back" href="index.html">About KyCast</a>
+</header>
+<div id="banner"><b>EXPERIMENTAL - NOT AN OFFICIAL FORECAST - NOT FOR SAFETY DECISIONS</b><span>For warnings use the National Weather Service.</span></div>
+<div id="stale" class="hidden" role="alert"></div>
+<div id="app">
+  <aside id="side">
+    <div class="card">
+      <h3>Latest radar</h3>
+      <div id="chipLive" class="big">-</div>
+      <div id="srcInfo" class="muted"></div>
+    </div>
+    <div class="card">
+      <h3>Storm motion</h3>
+      <div id="motion" class="big">-</div>
+      <div id="echo" class="muted"></div>
+    </div>
+    <div class="card">
+      <h3>How accurate (last 6 h)</h3>
+      <table id="vTab"></table>
+      <div class="muted small">Score = hits / (hits + misses + false alarms) on a 2 km grid, checked against real radar once each forecast time arrives. 1.0 is perfect. Storms-stay-put scores about 0.24 at 60 min / 30 dBZ; plain extrapolation about 0.38.</div>
+    </div>
+    <div class="card">
+      <h3>Point</h3>
+      <div id="probe" class="muted">Move over (or tap) the map for reflectivity over the next 2 h.</div>
+      <canvas id="probeCv" width="276" height="90"></canvas>
+    </div>
+  </aside>
+  <main id="mapwrap">
+    <div id="map"></div>
+    <div id="legend"></div>
+    <div id="bar">
+      <button id="play" class="btn" type="button">Play</button>
+      <input id="slider" type="range" min="0" max="27" value="3" aria-label="time">
+      <div id="tLabel"></div>
+      <input id="opacity" type="range" min="20" max="100" value="85" title="opacity" aria-label="opacity">
+    </div>
+    <div id="msg" class="hidden"></div>
+  </main>
+</div>
+<noscript><p id="noscript">The nowcast needs JavaScript.</p></noscript>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="kynet-nowcast.js"></script>
+</body>
+</html>

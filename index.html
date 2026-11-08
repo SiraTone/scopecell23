@@ -17,7 +17,7 @@
 <body>
 <header><div class="wrap">
   <a class="brand" href="index.html"><img src="kycast.svg" alt="">KYCAST</a>
-  <nav><a href="#how">What you get</a><a href="#checked">How it was checked</a><a href="#limits">Limits</a><a href="kynet-viewer.html">Live viewer</a></nav>
+  <nav><a href="#how">What you get</a><a href="#checked">How it was checked</a><a href="#limits">Limits</a><a href="kynet-viewer.html">5-day viewer</a><a href="kynet-nowcast.html">Nowcast</a></nav>
 </div></header>
 <main class="wrap">
 <div class="hero">
@@ -25,7 +25,8 @@
     <span class="tag">EXPERIMENTAL - NOT AN OFFICIAL FORECAST</span>
     <h1>Kentucky's storms, <em>five days out.</em></h1>
     <p class="lede">KyCast turns coarse GFS output into a 3 km reflectivity and tornado-chance outlook for Kentucky and its neighbours, refreshed every model cycle.</p>
-    <a class="btn solid" href="kynet-viewer.html">Open the live viewer</a>
+    <a class="btn solid" href="kynet-viewer.html">Open the 5-day viewer</a>
+    <a class="btn" href="kynet-nowcast.html">Open the nowcast</a>
     <a class="btn" href="#how">What you get</a>
   </div>
   <div>
@@ -40,7 +41,7 @@
   <div class="feat">
     <div><h3>Reflectivity</h3><p>A probability-matched, radar-style picture of where storms are likely, with balanced, crisp and chance-based views.</p></div>
     <div><h3>Tornado chance</h3><p>Chance of a tornado within 25 miles, for the 12Z-12Z convective day or the 3 hours around each frame.</p></div>
-    <div><h3>Raw GFS compare</h3><p>Switch on unprocessed GFS reflectivity next to KyCast on one synced timeline.</p></div>
+    <div><h3>Nowcast, 0-2 hours</h3><p>A live radar forecast rebuilt from NOAA MRMS every few minutes: where today's storms are heading over the next two hours, with a running score against real radar.</p></div>
   </div>
   <div class="tiles"><div class="tile"><b>2,078</b><span>training pairs</span></div><div class="tile"><b>0.65 M</b><span>parameters</span></div><div class="tile"><b>2.6 MB</b><span>weights file</span></div><div class="tile"><b>8 min</b><span>training, one consumer GPU</span></div><div class="tile"><b>36</b><span>held-out days, 19 with tornadoes</span></div><div class="tile"><b>3 km</b><span>352 x 184 grid, 5 days in 40 frames</span></div></div>
     <p class="cap">A full 5-day product is a few MB. Once the GFS data is downloaded, running the network for a whole forecast took about 2 seconds; the download dominates.</p>
