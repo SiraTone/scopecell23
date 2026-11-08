@@ -7,6 +7,13 @@
   <description>What shipped, what changed and what we learned across CellScope, FRED and KyCast.</description>
   <language>en-us</language>
   <item>
+    <title>Issue 2: KyCast NEXT 1 is live</title>
+    <link>https://cellscope.live/newsletter/002.html</link>
+    <guid>https://cellscope.live/newsletter/002.html</guid>
+    <pubDate>Sun, 08 Nov 2026 21:00:00 GMT</pubDate>
+    <description>KyCast NEXT 1, a model built for the next 1-2 days, replaces the 5-day model. Benchmarks against the old model and raw GFS, honest limits, and what NEXT 1.2 changes.</description>
+  </item>
+  <item>
     <title>Issue 1: Hello from CellScope</title>
     <link>https://cellscope.live/newsletter/001.html</link>
     <guid>https://cellscope.live/newsletter/001.html</guid>

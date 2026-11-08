@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CellScope Newsletter - Issue 2</title>
+<meta name="description" content="KyCast NEXT 1, a model built for the next 1-2 days, is live. Benchmarks against the old model and raw GFS, and what NEXT 1.2 is changing.">
+<meta property="og:title" content="CellScope Newsletter - Issue 2">
+<meta property="og:description" content="KyCast NEXT 1, a model built for the next 1-2 days, is live. Benchmarks against the old model and raw GFS, and what NEXT 1.2 is changing.">
+<meta property="og:image" content="https://cellscope.live/og.png">
+<link rel="icon" href="../fred.svg" type="image/svg+xml">
+<link rel="alternate" type="application/rss+xml" title="CellScope Newsletter" href="../feed.xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css?v=20261108">
+</head>
+<body>
+<header><div class="wrap">
+  <a class="brand" href="../index.html">CellScope</a>
+  <nav><a href="../what.html">What it does</a><a href="../kynet.html">KyCast</a><a href="../chat.html">Chat &amp; Watch</a><a href="../newsletter.html" class="on" aria-current="page">Newsletter</a></nav>
+</div></header>
+
+<main class="wrap">
+<article class="page issue">
+  <div class="mono">Issue 2 &middot; November 8, 2026</div>
+  <h1>KyCast NEXT 1 is live</h1>
+  <p class="sub">A model trained only for the next one to two days replaces the 5-day KyCast. Here is what improved, what did not, and what NEXT 1.2 is changing.</p>
+
+  <h2>Why a new model</h2>
+  <p>The first KyCast tried to cover five days. Its skill fell fast with lead time: by day 5 it barely beat guessing the average. Most people care about today and tomorrow, so we trained a model for exactly that and dropped the long range. The viewer now shows up to 60 hours, which is three convective-day buttons.</p>
+
+  <h2>What changed</h2>
+  <ul class="limits">
+    <li><b>Trained for 1-2 days only.</b> It sees only GFS runs 60 hours old or less, so none of its capacity goes to days 3-5.</li>
+    <li><b>Real radar as truth for part of the data.</b> Extra training pairs are scored against observed MRMS radar, the same source as our 0-2 hour nowcast archive, not only the HRRR model analysis.</li>
+    <li><b>Calibrated rain probabilities.</b> The percentages are now corrected on days the model never saw, the same way tornado chance already was. Without this step the storm-strength (35 dBZ) probabilities scored below the base rate.</li>
+  </ul>
+
+  <h2>Benchmarks</h2>
+  <p>All numbers are on the same 36 held-out days (19 with tornadoes in the grid) for both models. Higher is better.</p>
+  <h3>Where the rain lands, day 1 (25 dBZ, neighbourhood match)</h3><div style="display:flex;align-items:center;gap:12px;margin:6px 0"><span style="width:130px;font-size:14px">Earlier 5-day</span><div style="height:20px;border-radius:4px;background:#7e8fa6;width:255px"></div><b class="mono">0.245</b></div><div style="display:flex;align-items:center;gap:12px;margin:6px 0"><span style="width:130px;font-size:14px">NEXT 1</span><div style="height:20px;border-radius:4px;background:#2f8fe8;width:450px"></div><b class="mono">0.433</b></div><div style="display:flex;align-items:center;gap:12px;margin:6px 0"><span style="width:130px;font-size:14px">Raw GFS</span><div style="height:20px;border-radius:4px;background:#e0a02b;width:483px"></div><b class="mono">0.464</b></div><h3>Where the rain lands, day 2</h3><div style="display:flex;align-items:center;gap:12px;margin:6px 0"><span style="width:130px;font-size:14px">Earlier 5-day</span><div style="height:20px;border-radius:4px;background:#7e8fa6;width:161px"></div><b class="mono">0.155</b></div><div style="display:flex;align-items:center;gap:12px;margin:6px 0"><span style="width:130px;font-size:14px">NEXT 1</span><div style="height:20px;border-radius:4px;background:#2f8fe8;width:360px"></div><b class="mono">0.346</b></div><div style="display:flex;align-items:center;gap:12px;margin:6px 0"><span style="width:130px;font-size:14px">Raw GFS</span><div style="height:20px;border-radius:4px;background:#e0a02b;width:356px"></div><b class="mono">0.342</b></div>
+  <p>NEXT 1 roughly doubles the old model's match at both leads. At day 2 it is level with raw GFS (0.35 against 0.34, a tie on 36 days). At day 1 raw GFS is still ahead (0.46 against 0.43).</p>
+  <table class="sk"><tr><th>Probability skill (Brier, calibrated, out of fold)</th><th>Earlier 5-day</th><th>NEXT 1</th></tr>
+    <tr><td>25 dBZ, day 1</td><td>0.121</td><td>0.137</td></tr>
+    <tr><td>25 dBZ, day 2</td><td>0.088</td><td>0.104</td></tr>
+    <tr><td>35 dBZ, day 1</td><td>0.020</td><td>0.027</td></tr>
+    <tr><td>35 dBZ, day 2</td><td>0.017</td><td>0.020</td></tr></table>
+  <table class="sk"><tr><th>Daily tornado chance (Brier skill)</th><th>Earlier 5-day</th><th>NEXT 1</th></tr>
+    <tr><td>Day 1</td><td>0.078</td><td>0.101</td></tr>
+    <tr><td>Day 2</td><td>0.080</td><td>0.101</td></tr></table>
+  <p class="cap">Out of fold means the correction was fitted on half the test days and scored on the other half. Probability gains are modest: 0.003 to 0.023 depending on the row. The large gain is in where rain areas are placed.</p>
+
+  <h2>Honest limits</h2>
+  <ul class="limits">
+    <li><b>Small test.</b> 36 days is not many, and only the day-1 and day-2 rows above are meaningful for NEXT 1.</li>
+    <li><b>Small training set.</b> NEXT 1 learned from 1,512 pairs and overfits somewhat. That is the main reason for 1.2.</li>
+    <li><b>Tornado ranking did not improve.</b> The ability to rank high-risk days against low-risk days is about the same (day 2: 0.953 against 0.959 before). The gain is in how well the percentages match what happened.</li>
+    <li><b>Tornado chances are still capped at 15%.</b> When it says 15%, tornadoes happened about 26% of the time on test days, so the top end is cautious.</li>
+    <li><b>Experimental.</b> Not an official forecast. Not for safety decisions.</li>
+  </ul>
+
+  <h2>What NEXT 1.2 changes</h2>
+  <p>NEXT 1.2 is training now. It uses about 3,400 additional short-lead training pairs built from the same days with more GFS forecast cycles per valid time, so the model sees more variety at 1-2 day leads, and it gets the same probability calibration step. We have no scores for it yet and will not quote any until it has been tested on the same 36 days. If it beats NEXT 1 on every row above, it replaces it, and we will say so here with the numbers.</p>
+
+  <h2>Try it</h2>
+  <p>The <a href="../kynet-viewer.html">live viewer</a> now shows the newest NEXT 1 run, and the <a href="../kynet.html">KyCast page</a> has the full checks and limits. A new run is produced for every GFS cycle (four times a day).</p>
+  <p class="cap">CellScope products are automated and experimental. For warnings and emergencies, use the National Weather Service and your local officials.</p>
+  <p><a class="btn" href="../newsletter.html">&larr; All issues</a></p>
+</article>
+</main>
+
+<footer><div class="wrap">
+  <span>CellScope products, including KyCast and FRED, are automated and experimental. Don't rely on them for safety decisions. For warnings and emergencies, use the National Weather Service and your local officials.</span>
+  <span>&copy; 2026 CellScope</span>
+</div></footer>
+</body>
+</html>

@@ -385,7 +385,7 @@
     S.step = Math.min(S.step, T - 1) || first;
     buildDays(); applyVisibility(); draw();
     const cyc = new Date(meta.cycle);
-    $('#runInfo').innerHTML = `GFS ${cyc.toUTCString().slice(5, 22)} Z<br>${T} steps, ${meta.days.length} convective days<br>made ${ageNote(meta)}`;
+    $('#runInfo').innerHTML = `${(meta.model && meta.model.name) || 'KyCast'}<br>GFS ${cyc.toUTCString().slice(5, 22)} Z<br>${T} steps, ${meta.days.length} convective days<br>made ${ageNote(meta)}`;
     $('#empty').classList.add('hidden');
     S.loadedAt = Date.now();
   }
