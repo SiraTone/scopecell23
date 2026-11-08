@@ -7,6 +7,13 @@
   <description>What shipped, what changed and what we learned across CellScope, FRED and KyCast.</description>
   <language>en-us</language>
   <item>
+    <title>Issue 3: A calibration discovery</title>
+    <link>https://cellscope.live/newsletter/003.html</link>
+    <guid>https://cellscope.live/newsletter/003.html</guid>
+    <pubDate>Sun, 08 Nov 2026 23:00:00 GMT</pubDate>
+    <description>We found something in how KyCast is calibrated that made the models far more trustworthy in testing. The story, without the recipe.</description>
+  </item>
+  <item>
     <title>Issue 2: KyCast NEXT 1 is live</title>
     <link>https://cellscope.live/newsletter/002.html</link>
     <guid>https://cellscope.live/newsletter/002.html</guid>

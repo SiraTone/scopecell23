@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CellScope Newsletter - Issue 3</title>
+<meta name="description" content="A calibration finding that is making KyCast noticeably more trustworthy, told without the recipe.">
+<meta property="og:title" content="CellScope Newsletter - Issue 3">
+<meta property="A calibration finding that is making KyCast noticeably more trustworthy, told without the recipe.">
+<meta property="og:image" content="https://cellscope.live/og.png">
+<link rel="icon" href="../fred.svg" type="image/svg+xml">
+<link rel="alternate" type="application/rss+xml" title="CellScope Newsletter" href="../feed.xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css?v=20261108">
+</head>
+<body>
+<header><div class="wrap">
+  <a class="brand" href="../index.html">CellScope</a>
+  <nav><a href="../what.html">What it does</a><a href="../kynet.html">KyCast</a><a href="../chat.html">Chat &amp; Watch</a><a href="../newsletter.html" class="on" aria-current="page">Newsletter</a></nav>
+</div></header>
+
+<main class="wrap">
+<article class="page issue">
+  <div class="mono">Issue 3 &middot; November 8, 2026</div>
+  <h1>A calibration discovery</h1>
+  <p class="sub">We found something in how we calibrate KyCast that made the models a lot more accurate in our testing. Here is the story, with the recipe deliberately left out.</p>
+
+  <h2>The problem we kept hitting</h2>
+  <p>A forecast model can be right about <em>where</em> storms will be and still be wrong about <em>how confident</em> it should sound. Issue 2 showed this: the storm-strength probabilities scored below the base rate until we corrected them. The correction step is called calibration, and we had treated it as a finishing touch.</p>
+
+  <h2>What we found</h2>
+  <p>While looking at why some probabilities were still off, we noticed a pattern in the errors that the standard calibration step was blind to. Fixing it did not require a bigger model, more training data or more computing power. It came from changing how the model's raw output is checked against what really happened, and what that check is allowed to learn from.</p>
+  <p>We are not going to describe the method. It is part of what makes KyCast ours, and it is cheap to copy once you know it. What we can say is that it is simple in hindsight, it is applied after training, and it is tested the same careful way as everything else: fitted on some days, scored on days the model never saw.</p>
+
+  <h2>What it changes for you</h2>
+  <ul class="limits">
+    <li><b>Percentages you can read at face value.</b> When KyCast says a number, the number should now be closer to how often it happens.</li>
+    <li><b>Less over-confidence.</b> Fewer bold areas that do not verify, and fewer quiet areas that should not have been quiet.</li>
+    <li><b>Works on top of the current model.</b> It is not a new model, so it can be applied to NEXT 1 and to NEXT 1.2 when that is ready.</li>
+  </ul>
+
+  <h2>What we are not saying</h2>
+  <ul class="limits">
+    <li><b>No scores yet.</b> We will publish numbers only once they are measured on the same 36 held-out days as Issue 2, so you can compare like with like.</li>
+    <li><b>Calibration is not magic.</b> It improves honesty about confidence. It cannot fix a storm that the underlying GFS run placed in the wrong county.</li>
+    <li><b>Still experimental.</b> Not an official forecast. Not for safety decisions.</li>
+  </ul>
+
+  <h2>What is next</h2>
+  <p>NEXT 1.2 is still in training. Once it is scored, the calibration finding goes on top of it, and we will report the before and after against NEXT 1 and raw GFS in a future issue.</p>
+  <p class="cap">CellScope products are automated and experimental. For warnings and emergencies, use the National Weather Service and your local officials.</p>
+  <p><a class="btn" href="../newsletter.html">&larr; All issues</a></p>
+</article>
+</main>
+
+<footer><div class="wrap">
+  <span>CellScope products, including KyCast and FRED, are automated and experimental. Don't rely on them for safety decisions. For warnings and emergencies, use the National Weather Service and your local officials.</span>
+  <span>&copy; 2026 CellScope</span>
+</div></footer>
+</body>
+</html>
