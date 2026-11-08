@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>KyCast — FRED</title>
+<title>KyCast — CellScope</title>
 <meta name="description" content="KyCast: an experimental model that downscales GFS into a 5-day Kentucky reflectivity and tornado-chance outlook.">
 <meta property="og:title" content="KyCast — FRED">
 <meta property="og:description" content="KyCast: an experimental model that downscales GFS into a 5-day Kentucky reflectivity and tornado-chance outlook.">
@@ -16,7 +16,7 @@
 </head>
 <body>
 <header><div class="wrap">
-  <a class="brand" href="index.html">FRED</a>
+  <a class="brand" href="index.html">CellScope</a>
   <nav><a href="what.html">What he does</a><a href="kynet.html" class="on" aria-current="page">KyCast</a><a href="chat.html">Chat &amp; Watch</a><a href="newsletter.html">Newsletter</a></nav>
 </div></header>
 
@@ -33,31 +33,31 @@
     <p class="cap">A full 5-day product is a few MB. Once the GFS data is downloaded, running the network for a whole forecast took about 2 seconds; the download dominates.</p>
     <h3>How it was checked</h3>
     <p>On 864 forecast/analysis pairs from 36 whole days the network never saw (19 had tornadoes in the grid), against HRRR analyses and SPC tornado reports. Scores are Brier skill against climatology: above 0 beats always forecasting the base rate.</p>
-    <div class="check"><svg class="rel" viewBox="0 0 400 400" role="img" aria-label="Forecast daily tornado chance versus observed frequency"><line class="diag" x1="76.0" y1="336.0" x2="384.0" y2="16.0"/><line class="g" x1="76" x2="384" y1="336.0" y2="336.0"/><line class="g" y1="16" y2="336" x1="76.0" x2="76.0"/><text x="68" y="339.5" text-anchor="end">0%</text><text x="76.0" y="352" text-anchor="middle"></text><line class="g" x1="76" x2="384" y1="256.0" y2="256.0"/><line class="g" y1="16" y2="336" x1="153.0" x2="153.0"/><text x="68" y="259.5" text-anchor="end">5%</text><text x="153.0" y="352" text-anchor="middle">5%</text><line class="g" x1="76" x2="384" y1="176.0" y2="176.0"/><line class="g" y1="16" y2="336" x1="230.0" x2="230.0"/><text x="68" y="179.5" text-anchor="end">10%</text><text x="230.0" y="352" text-anchor="middle">10%</text><line class="g" x1="76" x2="384" y1="96.0" y2="96.0"/><line class="g" y1="16" y2="336" x1="307.0" x2="307.0"/><text x="68" y="99.5" text-anchor="end">15%</text><text x="307.0" y="352" text-anchor="middle">15%</text><line class="g" x1="76" x2="384" y1="16.0" y2="16.0"/><line class="g" y1="16" y2="336" x1="384.0" x2="384.0"/><text x="68" y="19.5" text-anchor="end">20%</text><text x="384.0" y="352" text-anchor="middle">20%</text><circle cx="77.7" cy="334.2" r="5"/><text class="n" x="86.7" y="327.2" text-anchor="start">n=6,174,889</text><circle cx="123.1" cy="249.4" r="5"/><text class="n" x="132.1" y="242.4" text-anchor="start">n=296,699</text><circle cx="188.3" cy="153.9" r="5"/><text class="n" x="179.3" y="144.9" text-anchor="end">n=156,461</text><circle cx="269.7" cy="129.6" r="5"/><text class="n" x="265.7" y="117.6" text-anchor="middle">n=116,662</text><circle cx="307.0" cy="133.1" r="5"/><text class="n" x="309.0" y="153.1" text-anchor="middle">n=250,233</text><text x="230.0" y="394" text-anchor="middle">forecast chance</text><text transform="rotate(-90 16 176.0)" x="16" y="176.0" text-anchor="middle">observed frequency</text></svg><div>
+    <div class="check"><svg class="rel" viewBox="0 0 400 400" role="img" aria-label="Forecast daily tornado chance versus observed frequency"><line class="diag" x1="76.0" y1="336.0" x2="384.0" y2="16.0"/><line class="g" x1="76" x2="384" y1="336.0" y2="336.0"/><line class="g" y1="16" y2="336" x1="76.0" x2="76.0"/><text x="68" y="339.5" text-anchor="end">0%</text><text x="76.0" y="352" text-anchor="middle"></text><line class="g" x1="76" x2="384" y1="256.0" y2="256.0"/><line class="g" y1="16" y2="336" x1="153.0" x2="153.0"/><text x="68" y="259.5" text-anchor="end">5%</text><text x="153.0" y="352" text-anchor="middle">5%</text><line class="g" x1="76" x2="384" y1="176.0" y2="176.0"/><line class="g" y1="16" y2="336" x1="230.0" x2="230.0"/><text x="68" y="179.5" text-anchor="end">10%</text><text x="230.0" y="352" text-anchor="middle">10%</text><line class="g" x1="76" x2="384" y1="96.0" y2="96.0"/><line class="g" y1="16" y2="336" x1="307.0" x2="307.0"/><text x="68" y="99.5" text-anchor="end">15%</text><text x="307.0" y="352" text-anchor="middle">15%</text><line class="g" x1="76" x2="384" y1="16.0" y2="16.0"/><line class="g" y1="16" y2="336" x1="384.0" x2="384.0"/><text x="68" y="19.5" text-anchor="end">20%</text><text x="384.0" y="352" text-anchor="middle">20%</text><circle cx="77.7" cy="334.2" r="5"/><text class="n" x="86.7" y="327.2" text-anchor="start">6.2M samples</text><circle cx="123.1" cy="249.4" r="5"/><text class="n" x="132.1" y="242.4" text-anchor="start">297K</text><circle cx="188.3" cy="153.9" r="5"/><text class="n" x="179.3" y="144.9" text-anchor="end">156K</text><circle cx="269.7" cy="129.6" r="5"/><text class="n" x="265.7" y="117.6" text-anchor="middle">117K</text><circle cx="307.0" cy="133.1" r="5"/><text class="n" x="309.0" y="153.1" text-anchor="middle">250K</text><text class="n" x="300" y="40" text-anchor="middle">Perfect = on the dashed line</text><text x="230.0" y="394" text-anchor="middle">What KyCast said the chance was</text><text transform="rotate(-90 16 176.0)" x="16" y="176.0" text-anchor="middle">How often a tornado really happened</text></svg><div>
       <p style="margin-top:0"><b>Daily tornado chance</b> (within 25 miles, 12Z-12Z day), out-of-fold calibration on the held-out days.</p>
       <table class="sk"><tr><th>Lead</th><th>Brier skill</th></tr><tr><td>Day 1</td><td>0.077</td></tr><tr><td>Day 3</td><td>0.079</td></tr><tr><td>Day 5</td><td>0.054</td></tr><tr><td>All leads</td><td>0.070</td></tr></table>
-      <p class="cap">Chart: forecast chance against how often a tornado was observed, per bin (n = samples in the bin). The dashed line is perfect reliability.</p></div></div>
+      <p class="cap"><b>How to read it:</b> each dot is a group of forecasts that gave about the same chance. Across is the chance KyCast gave; up is how often a tornado really happened in that group. The closer a dot sits to the dashed line, the more honest the percentage. For example, when it said about 15%, tornadoes showed up about 13% of the time. Numbers beside the dots are how many forecasts are in each group (K = thousand, M = million).</p></div></div>
     <table class="sk"><tr><th>Reflectivity, Brier skill</th><th>Day 1</th><th>Day 3</th><th>Day 5</th></tr>
       <tr><td>25 dBZ</td><td>0.108</td><td>0.042</td><td>0.013</td></tr>
       <tr><td>35 dBZ</td><td>0.017</td><td>0.012</td><td>0.005</td></tr></table>
     <h3>Honest limits</h3>
     <ul class="limits">
-      <li>Few events: only 19 tornado days in the check. The numbers are noisy.</li>
-      <li>Tornado probabilities above about 15% were overconfident in testing, so a daily chance is never shown above 15%.</li>
-      <li>On neighbourhood overlap (fractions skill score, 33 km) of 25 dBZ reflectivity at day 1, raw GFS scored higher (0.46) than thresholded KyCast maps (0.25, at a 25% probability cut). KyCast's advantage is calibrated probabilities, not a sharper storm picture.</li>
-      <li>Reflectivity at days 3-5 is a statistical picture of where storms are possible, not a prediction of individual cells.</li>
-      <li>The reflectivity layer is derived from probabilities, not a physics simulation.</li>
-      <li>Trained on a limited sample of days (2021-2025) and one GFS version; behaviour in other regimes is unknown.</li>
-      <li>It was not compared with HRRR forecasts.</li>
-      <li>Experimental. Not an official forecast. Do not use it for safety decisions.</li>
+      <li><b>The test was small.</b> Only 19 of the 36 held-out days had tornadoes, so the scores can move a lot with a few more events.</li>
+      <li><b>We cap the top end.</b> In testing, chances above about 15% ran higher than what actually happened, so a daily tornado chance is never shown above 15%.</li>
+      <li><b>It is not a sharper storm picture.</b> At day 1, on a 33 km neighbourhood overlap test of 25 dBZ reflectivity (fractions skill score), raw GFS scored higher (0.46) than thresholded KyCast maps (0.25, at a 25% probability cut). What KyCast adds is calibrated probabilities.</li>
+      <li><b>Days 3-5 show where, not which storm.</b> Reflectivity there is a statistical picture of where storms are possible, not a forecast of individual cells.</li>
+      <li><b>The reflectivity is derived, not simulated.</b> It is built from probabilities, not from a physics model of the atmosphere.</li>
+      <li><b>Narrow training.</b> It learned from a limited set of days (2021-2025) and one GFS version. We do not know how it behaves in weather patterns it has not seen.</li>
+      <li><b>No head-to-head with HRRR forecasts yet.</b> We checked against HRRR analyses, but have not compared KyCast with HRRR's own forecasts, so we cannot say how it ranks against them.</li>
+      <li><b>Experimental.</b> This is not an official forecast. Please do not use it for safety decisions.</li>
     </ul>
     <p class="cap" style="margin-top:18px">Data: NOAA GFS and HRRR (NOAA open data on AWS), Storm Prediction Center storm reports, Esri basemap tiles in the screenshot. Not affiliated with or endorsed by any of them.</p>
   </section>
 </main>
 
 <footer><div class="wrap">
-  <span>FRED is an AI. Don't rely on him for safety decisions. For warnings and emergencies, use the National Weather Service and your local officials.</span>
-  <span>&copy; 2026 FRED</span>
+  <span>CellScope products, including KyCast and FRED, are automated and experimental. Don't rely on them for safety decisions. For warnings and emergencies, use the National Weather Service and your local officials.</span>
+  <span>&copy; 2026 CellScope</span>
 </div></footer>
 </body>
 </html>
