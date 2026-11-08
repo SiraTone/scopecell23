@@ -117,8 +117,3 @@ input[type=range] { accent-color: var(--accent); }
   #tlRow select { width: 70px; }
 }
 @media (prefers-reduced-motion: reduce) { #side { transition: none; } }
-
-#views { display: flex; gap: 4px; }
-#views a { font-size: 12.5px; color: var(--muted); text-decoration: none; padding: 5px 12px; border-radius: 8px; border: 1px solid transparent; }
-#views a.on { color: #04211e; background: var(--accent); font-weight: 600; }
-#views a:not(.on):hover { color: var(--text); border-color: var(--line); }
