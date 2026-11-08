@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>KY-Net viewer - FRED</title>
-<meta name="description" content="Live viewer for KY-Net, an experimental 5-day Kentucky reflectivity and tornado-chance outlook. Not an official forecast.">
-<link rel="icon" href="fred.svg" type="image/svg+xml">
+<title>KyCast viewer</title>
+<meta name="description" content="Live viewer for KyCast, an experimental 5-day Kentucky reflectivity and tornado-chance outlook. Not an official forecast.">
+<link rel="icon" href="kycast.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
@@ -13,8 +13,9 @@
 </head>
 <body>
 <header id="top">
-  <div id="brand"><span class="mark"></span><b>KY-NET</b><i>Kentucky forecast viewer</i></div>
-  <a id="back" href="kynet.html">About KY-Net</a>
+  <div id="brand"><span class="mark"></span><b>KYCAST</b><i>Kentucky forecast viewer</i></div>
+  <nav id="views"><a class="on" href="kynet-viewer.html">5-day forecast</a><a href="kynet-nowcast.html">Nowcast 0-2 h</a></nav>
+  <a id="back" href="kynet.html">About KyCast</a>
   <button id="sideBtn" type="button" aria-controls="side">Layers</button>
 </header>
 <div id="banner"><b>EXPERIMENTAL - NOT AN OFFICIAL FORECAST - NOT FOR SAFETY DECISIONS</b><span>For warnings use the National Weather Service.</span></div>
@@ -55,11 +56,6 @@
       <div class="layer" data-l="storm">
         <label class="sw"><input type="checkbox" id="lyStorm"><span></span>Storm chance (35+ dBZ)</label>
         <input type="range" id="opStorm" min="10" max="100" value="70" title="opacity">
-      </div>
-      <div class="layer" data-l="gfs">
-        <label class="sw"><input type="checkbox" id="lyGfs"><span></span>Raw GFS reflectivity</label>
-        <input type="range" id="opGfs" min="10" max="100" value="85" title="opacity">
-        <div class="sub muted">for comparison with KY-Net</div>
       </div>
       <hr>
       <div class="layer"><label class="sw"><input type="checkbox" id="lyCounty" checked><span></span>County lines</label></div>

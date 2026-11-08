@@ -1,4 +1,4 @@
-/* KY-Net public viewer (cellscope.live). Experimental, not an official forecast.
+/* KyCast public viewer (internal name: kynet) (cellscope.live). Experimental, not an official forecast.
    Reads the latest published run (latest.json + per-run meta/frames/daily .gz) from the kynet-data branch and
    gunzips it in the browser. One state object drives every layer, the clock, the day summary and the readout.
    Diag: window.__kynetDiag(). */
@@ -53,9 +53,9 @@
     baseLayer.setZIndex(1);
     store.set('base', k);
   }
-  const PANES = { gfs: 410, refl: 420, storm: 430, tor: 440, lines: 450, towns: 460 };
+  const PANES = { refl: 420, storm: 430, tor: 440, lines: 450, towns: 460 };
   Object.entries(PANES).forEach(([n, z]) => { map.createPane(n).style.zIndex = z; });
-  L.control.attribution({ prefix: false }).addAttribution('KY-Net on NOAA GFS | basemap Esri').addTo(map);
+  L.control.attribution({ prefix: false }).addAttribution('KyCast on NOAA GFS | basemap Esri').addTo(map);
 
   // overlay canvases: 2x the model grid, rows spaced in Web-Mercator so they sit exactly under Leaflet
   const OV = {};
@@ -77,7 +77,7 @@
     S.lut = { OW, OH, ri, rf, ci, cf };
     const bounds = [[south, west], [north, east]];
     for (const k of Object.keys(OV)) map.removeLayer(OV[k].layer);
-    for (const k of ['gfs', 'refl', 'storm', 'tor']) {
+    for (const k of ['refl', 'storm', 'tor']) {
       const cv = document.createElement('canvas'); cv.width = OW; cv.height = OH;
       const layer = L.imageOverlay('data:image/gif;base64,R0lGODlhAQABAAAAACw=', bounds, { pane: k, interactive: false, opacity: 1 });
       OV[k] = { cv, layer, ctx: cv.getContext('2d'), img: new ImageData(OW, OH), dirty: true };
@@ -90,8 +90,8 @@
     if (el) { el.src = o.cv.toDataURL(); o.dirty = false; } else o.dirty = true;
   }
   function applyVisibility() {
-    const on = { gfs: $('#lyGfs').checked, refl: $('#lyRefl').checked, storm: $('#lyStorm').checked, tor: $('#lyTor').checked };
-    const op = { gfs: $('#opGfs').value, refl: $('#opRefl').value, storm: $('#opStorm').value, tor: $('#opTor').value };
+    const on = { refl: $('#lyRefl').checked, storm: $('#lyStorm').checked, tor: $('#lyTor').checked };
+    const op = { refl: $('#opRefl').value, storm: $('#opStorm').value, tor: $('#opTor').value };
     for (const k in OV) {
       const has = !!S.frames;
       if (on[k] && has) { if (!map.hasLayer(OV[k].layer)) OV[k].layer.addTo(map); OV[k].layer.setOpacity(op[k] / 100); }
@@ -215,7 +215,6 @@
     S.fld = {};
     if ($('#lyRefl').checked) { S.fld.refl = reflField(t, S.q); paintDbz(OV.refl, S.fld.refl); }
     if ($('#lyStorm').checked) { S.fld.storm = chanField(t, 3, v => v / 255); paintStorm(OV.storm, S.fld.storm); }
-    if ($('#lyGfs').checked) { S.fld.gfs = chanField(t, 7, v => v - 10); paintDbz(OV.gfs, S.fld.gfs); }
     if ($('#lyTor').checked) {
       const f = torField(t);
       S.fld.tor = f;
@@ -284,9 +283,9 @@
   // ------------------------------------------------------------------ legend
   function legend() {
     let h = '';
-    if ($('#lyRefl').checked || $('#lyGfs').checked) {
+    if ($('#lyRefl').checked) {
       const grad = DBZ.slice(0, 14).map(s => `rgb(${s[1]},${s[2]},${s[3]}) ${(s[0] - 5) / 65 * 100}%`).join(',');
-      const lab = $('#lyRefl').checked ? QLONG[S.q] : 'raw GFS';
+      const lab = QLONG[S.q];
       h += `<div class="blk"><h4>Reflectivity dBZ - ${lab}</h4><div class="bar" style="background:linear-gradient(90deg,${grad})"></div><div class="ticks"><span>5</span><span>20</span><span>35</span><span>50</span><span>65</span></div></div>`;
     }
     if ($('#lyStorm').checked) h += '<div class="blk"><h4>Chance of 35+ dBZ</h4><div class="bar" style="background:linear-gradient(90deg,rgba(255,196,70,.4),#ff8028,#ec3440,#d628aa)"></div><div class="ticks"><span>10%</span><span>50%</span><span>90%</span></div></div>';
@@ -334,7 +333,7 @@
   map.on('mousemove', e => {
     if (!S.meta || !S.frames) return;
     const g = S.grid, j = Math.round((e.latlng.lng - g.lon0) / g.d), i = Math.round((e.latlng.lat - g.lat0) / g.d);
-    if (i < 0 || j < 0 || i >= g.ny || j >= g.nx) { $('#readout').innerHTML = '<div class="muted">Outside the KY-Net grid</div>'; return; }
+    if (i < 0 || j < 0 || i >= g.ny || j >= g.nx) { $('#readout').innerHTML = '<div class="muted">Outside the KyCast grid</div>'; return; }
     const k = i * g.nx + j, n = N(), t = S.step, P = S.frames;
     const row = (a, b) => `<div class="r"><span>${a}</span><b>${b}</b></div>`;
     const di = dayOf(t), tn = nearestTown(e.latlng.lat, e.latlng.lng);
@@ -342,7 +341,6 @@
     let h = `<div class="t">${tn || e.latlng.lat.toFixed(2) + ', ' + e.latlng.lng.toFixed(2)}</div>`;
     h += row('Reflectivity (' + QLAB[S.q] + ')', (S.fld.refl ? S.fld.refl[k] : reflPix(t, k, S.q, (S.q === 'pm' || S.q === 'crisp') ? pmCuts(t) : null)).toFixed(0) + ' dBZ');
     h += row('Chance 35+ dBZ', pct(P[(t * 8 + 3) * n + k] / 255));
-    h += row('Raw GFS', Math.max(0, P[(t * 8 + 7) * n + k] - 10) + ' dBZ');
     h += row('Tornado, 3 h', pct(sq(P[(t * 8 + 6) * n + k])));
     h += row('Tornado, day', di < 0 ? '-' : pct(sq(S.daily[di * n + k])));
     $('#readout').innerHTML = h;
@@ -406,8 +404,8 @@
   const fail = e => { $('#runInfo').textContent = 'Could not load the forecast.'; $('#empty').classList.remove('hidden'); $('#empty').innerHTML = `<div><b>No forecast available</b><br><span class="muted">${String(e.message || e).replace(/</g, '&lt;')}</span></div>`; };
 
   // ------------------------------------------------------------------ controls
-  ['lyRefl', 'lyTor', 'lyStorm', 'lyGfs'].forEach(id => $('#' + id).onchange = () => { store.set(id, $('#' + id).checked); applyVisibility(); draw(); });
-  ['opRefl', 'opTor', 'opStorm', 'opGfs'].forEach(id => $('#' + id).oninput = () => { store.set(id, $('#' + id).value); applyVisibility(); });
+  ['lyRefl', 'lyTor', 'lyStorm'].forEach(id => $('#' + id).onchange = () => { store.set(id, $('#' + id).checked); applyVisibility(); draw(); });
+  ['opRefl', 'opTor', 'opStorm'].forEach(id => $('#' + id).oninput = () => { store.set(id, $('#' + id).value); applyVisibility(); });
   $('#lyCounty').onchange = toggleCounty;
   $('#lyTown').onchange = drawTowns;
   $('#baseSel').onchange = e => { setBase(e.target.value); drawTowns(); };
@@ -432,8 +430,8 @@
   addEventListener('resize', () => { if (S.meta) spark(); });
 
   // restore saved prefs
-  ['lyRefl', 'lyTor', 'lyStorm', 'lyGfs'].forEach(id => { const v = store.get(id, null); if (v !== null) $('#' + id).checked = v; });
-  ['opRefl', 'opTor', 'opStorm', 'opGfs'].forEach(id => { const v = store.get(id, null); if (v !== null) $('#' + id).value = v; });
+  ['lyRefl', 'lyTor', 'lyStorm'].forEach(id => { const v = store.get(id, null); if (v !== null) $('#' + id).checked = v; });
+  ['opRefl', 'opTor', 'opStorm'].forEach(id => { const v = store.get(id, null); if (v !== null) $('#' + id).value = v; });
   $$('#confSeg button').forEach(x => x.classList.toggle('on', (isNaN(+x.dataset.q) ? x.dataset.q : +x.dataset.q) === S.q));
   $$('#torSeg button').forEach(x => x.classList.toggle('on', x.dataset.m === S.torMode));
   $('#baseSel').value = store.get('base', 'dark');

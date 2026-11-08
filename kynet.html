@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>KY-Net — FRED</title>
-<meta name="description" content="KY-Net: an experimental model that downscales GFS into a 5-day Kentucky reflectivity and tornado-chance outlook.">
-<meta property="og:title" content="KY-Net — FRED">
-<meta property="og:description" content="KY-Net: an experimental model that downscales GFS into a 5-day Kentucky reflectivity and tornado-chance outlook.">
+<title>KyCast — FRED</title>
+<meta name="description" content="KyCast: an experimental model that downscales GFS into a 5-day Kentucky reflectivity and tornado-chance outlook.">
+<meta property="og:title" content="KyCast — FRED">
+<meta property="og:description" content="KyCast: an experimental model that downscales GFS into a 5-day Kentucky reflectivity and tornado-chance outlook.">
 <meta property="og:image" content="og.png">
 <link rel="icon" href="fred.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,18 +17,18 @@
 <body>
 <header><div class="wrap">
   <a class="brand" href="index.html">FRED</a>
-  <nav><a href="what.html">What he does</a><a href="kynet.html" class="on" aria-current="page">KY-Net</a><a href="chat.html">Chat &amp; Watch</a><a href="newsletter.html">Newsletter</a></nav>
+  <nav><a href="what.html">What he does</a><a href="kynet.html" class="on" aria-current="page">KyCast</a><a href="chat.html">Chat &amp; Watch</a><a href="newsletter.html">Newsletter</a></nav>
 </div></header>
 
 <main class="wrap">
 <section class="page">
     <span class="tag">EXPERIMENTAL - NOT AN OFFICIAL FORECAST - NOT FOR SAFETY DECISIONS</span>
-    <h2>KY-Net</h2>
+    <h2>KyCast</h2>
     <p class="sub">A small model that downscales GFS into a 5-day Kentucky reflectivity and tornado-chance outlook. The live viewer shows the most recent published run and warns when it is out of date.</p>
     <p style="margin:0 0 18px"><a class="btn solid" href="kynet-viewer.html">Open the live viewer</a></p>
-    <img class="shot" src="ky-net.webp" width="1300" height="706" alt="KY-Net viewer showing reflectivity and convective-day tornado chance over Kentucky and neighbouring states">
+    <img class="shot" src="ky-net.webp" width="1300" height="706" alt="KyCast viewer showing reflectivity and convective-day tornado chance over Kentucky and neighbouring states">
     <p class="cap">The viewer, showing a past case (GFS cycle 2025-04-01 00Z, valid 2025-04-02). It illustrates the interface, not skill: the case may have been in the training data.</p>
-    <p>KY-Net takes coarse output from NOAA's GFS and produces a 3 km (0.03 degree) grid over Kentucky and its neighbours (35.0-40.5 N, 91.0-80.4 W). The outlook runs 5 days in 3-hour steps and carries a reflectivity layer and a tornado-chance layer. The viewer shows reflectivity, tornado chance (3-hour or convective-day), the chance of 35+ dBZ and raw GFS for comparison on one synced timeline.</p>
+    <p>KyCast takes coarse output from NOAA's GFS and produces a 3 km (0.03 degree) grid over Kentucky and its neighbours (35.0-40.5 N, 91.0-80.4 W). The outlook runs 5 days in 3-hour steps and carries a reflectivity layer and a tornado-chance layer. The viewer shows reflectivity, tornado chance (3-hour or convective-day), the chance of 35+ dBZ and raw GFS for comparison on one synced timeline.</p>
     <div class="tiles"><div class="tile"><b>2,078</b><span>training pairs</span></div><div class="tile"><b>0.65 M</b><span>parameters</span></div><div class="tile"><b>2.6 MB</b><span>weights file</span></div><div class="tile"><b>8 min</b><span>training, one consumer GPU</span></div><div class="tile"><b>36</b><span>held-out days, 19 with tornadoes</span></div><div class="tile"><b>3 km</b><span>352 x 184 grid, 5 days in 40 frames</span></div></div>
     <p class="cap">A full 5-day product is a few MB. Once the GFS data is downloaded, running the network for a whole forecast took about 2 seconds; the download dominates.</p>
     <h3>How it was checked</h3>
@@ -44,7 +44,7 @@
     <ul class="limits">
       <li>Few events: only 19 tornado days in the check. The numbers are noisy.</li>
       <li>Tornado probabilities above about 15% were overconfident in testing, so a daily chance is never shown above 15%.</li>
-      <li>On neighbourhood overlap (fractions skill score, 33 km) of 25 dBZ reflectivity at day 1, raw GFS scored higher (0.46) than thresholded KY-Net maps (0.25, at a 25% probability cut). KY-Net's advantage is calibrated probabilities, not a sharper storm picture.</li>
+      <li>On neighbourhood overlap (fractions skill score, 33 km) of 25 dBZ reflectivity at day 1, raw GFS scored higher (0.46) than thresholded KyCast maps (0.25, at a 25% probability cut). KyCast's advantage is calibrated probabilities, not a sharper storm picture.</li>
       <li>Reflectivity at days 3-5 is a statistical picture of where storms are possible, not a prediction of individual cells.</li>
       <li>The reflectivity layer is derived from probabilities, not a physics simulation.</li>
       <li>Trained on a limited sample of days (2021-2025) and one GFS version; behaviour in other regimes is unknown.</li>
