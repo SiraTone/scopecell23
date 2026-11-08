@@ -1,4 +1,4 @@
-/* KY-Net public viewer (cellscope.live). Experimental, not an official forecast.
+/* KyCast public viewer (internal name: kynet) (cellscope.live). Experimental, not an official forecast.
    Reads the latest published run (latest.json + per-run meta/frames/daily .gz) from the kynet-data branch and
    gunzips it in the browser. One state object drives every layer, the clock, the day summary and the readout.
    Diag: window.__kynetDiag(). */
@@ -55,7 +55,7 @@
   }
   const PANES = { gfs: 410, refl: 420, storm: 430, tor: 440, lines: 450, towns: 460 };
   Object.entries(PANES).forEach(([n, z]) => { map.createPane(n).style.zIndex = z; });
-  L.control.attribution({ prefix: false }).addAttribution('KY-Net on NOAA GFS | basemap Esri').addTo(map);
+  L.control.attribution({ prefix: false }).addAttribution('KyCast on NOAA GFS | basemap Esri').addTo(map);
 
   // overlay canvases: 2x the model grid, rows spaced in Web-Mercator so they sit exactly under Leaflet
   const OV = {};
@@ -334,7 +334,7 @@
   map.on('mousemove', e => {
     if (!S.meta || !S.frames) return;
     const g = S.grid, j = Math.round((e.latlng.lng - g.lon0) / g.d), i = Math.round((e.latlng.lat - g.lat0) / g.d);
-    if (i < 0 || j < 0 || i >= g.ny || j >= g.nx) { $('#readout').innerHTML = '<div class="muted">Outside the KY-Net grid</div>'; return; }
+    if (i < 0 || j < 0 || i >= g.ny || j >= g.nx) { $('#readout').innerHTML = '<div class="muted">Outside the KyCast grid</div>'; return; }
     const k = i * g.nx + j, n = N(), t = S.step, P = S.frames;
     const row = (a, b) => `<div class="r"><span>${a}</span><b>${b}</b></div>`;
     const di = dayOf(t), tn = nearestTown(e.latlng.lat, e.latlng.lng);

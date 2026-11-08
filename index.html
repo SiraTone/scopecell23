@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FRED — Weather, live</title>
-<meta name="description" content="FRED is a weather chat bot that streams live on YouTube. Severe weather, forecasts, and answers to whatever you type in chat.">
-<meta property="og:title" content="FRED — Weather, live">
-<meta property="og:description" content="FRED is a weather chat bot that streams live on YouTube. Severe weather, forecasts, and answers to whatever you type in chat.">
+<title>KyCast - Kentucky 5-day storm outlook</title>
+<meta name="description" content="KyCast: an experimental model that downscales GFS into a 5-day Kentucky reflectivity and tornado-chance outlook. Not an official forecast.">
+<meta property="og:title" content="KyCast - Kentucky 5-day storm outlook">
+<meta property="og:description" content="Experimental 5-day Kentucky reflectivity and tornado-chance outlook, downscaled from GFS. Not an official forecast.">
 <meta property="og:image" content="og.png">
-<link rel="icon" href="fred.svg" type="image/svg+xml">
+<link rel="icon" href="kycast.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -16,33 +16,64 @@
 </head>
 <body>
 <header><div class="wrap">
-  <a class="brand" href="index.html">FRED</a>
-  <nav><a href="what.html">What he does</a><a href="kynet.html">KY-Net</a><a href="chat.html">Chat &amp; Watch</a><a href="newsletter.html">Newsletter</a></nav>
+  <a class="brand" href="index.html"><img src="kycast.svg" alt="">KYCAST</a>
+  <nav><a href="#how">What you get</a><a href="#checked">How it was checked</a><a href="#limits">Limits</a><a href="kynet-viewer.html">Live viewer</a></nav>
 </div></header>
-
 <main class="wrap">
 <div class="hero">
-    <div>
-      <div class="mono"><span class="dot"></span>Streaming on YouTube</div>
-      <h1>A weather chat bot that's on the air.</h1>
-      <p class="lede">FRED watches the sky around the clock, talks through what's happening, and answers when you ask him something.</p>
-      <a class="btn solid" href="https://www.youtube.com/@FredWeatherAI" target="_blank" rel="noopener">Watch @FredWeatherAI</a>
-      <a class="btn" href="https://www.youtube.com/@FredWeatherAI/live" target="_blank" rel="noopener">Go to the live stream</a>
-    </div>
-    <img class="portrait" src="fred.svg" alt="FRED, a small round-headed robot with yellow eyes">
+  <div>
+    <span class="tag">EXPERIMENTAL - NOT AN OFFICIAL FORECAST</span>
+    <h1>Kentucky's storms, <em>five days out.</em></h1>
+    <p class="lede">KyCast turns coarse GFS output into a 3 km reflectivity and tornado-chance outlook for Kentucky and its neighbours, refreshed every model cycle.</p>
+    <a class="btn solid" href="kynet-viewer.html">Open the live viewer</a>
+    <a class="btn" href="#how">What you get</a>
   </div>
+  <div>
+    <img class="shot" src="ky-net.webp" width="1300" height="706" alt="KyCast viewer showing reflectivity and convective-day tornado chance over Kentucky and neighbouring states">
+    <p class="cap">The viewer, showing a past case (GFS cycle 2025-04-01 00Z). It illustrates the interface, not skill: the case may have been in the training data.</p>
+  </div>
+</div>
 
-
-<section><h2>Explore</h2><div class="cards">
-<a class="card" href="what.html"><h3>What he does</h3><p>Severe weather, radar, forecasts, outlooks, tropics and quiet-day material.</p><span class="go">Read more &rarr;</span></a>
-<a class="card" href="kynet.html"><h3>KY-Net</h3><p>An experimental model that downscales GFS into a 5-day Kentucky outlook.</p><span class="go">See the outlook &rarr;</span></a>
-<a class="card" href="chat.html"><h3>Chat &amp; Watch</h3><p>Ask him a question, request your town, and find where he streams.</p><span class="go">Join in &rarr;</span></a>
-</div></section>
+<section id="how">
+  <h2>What you get</h2>
+  <p class="sub">KyCast covers 35.0-40.5 N, 91.0-80.4 W on a 0.03 degree grid, in 3-hour steps out to 5 days. The live viewer shows the latest published run and warns when it is out of date.</p>
+  <div class="feat">
+    <div><h3>Reflectivity</h3><p>A probability-matched, radar-style picture of where storms are likely, with balanced, crisp and chance-based views.</p></div>
+    <div><h3>Tornado chance</h3><p>Chance of a tornado within 25 miles, for the 12Z-12Z convective day or the 3 hours around each frame.</p></div>
+    <div><h3>Raw GFS compare</h3><p>Switch on unprocessed GFS reflectivity next to KyCast on one synced timeline.</p></div>
+  </div>
+  <div class="tiles"><div class="tile"><b>2,078</b><span>training pairs</span></div><div class="tile"><b>0.65 M</b><span>parameters</span></div><div class="tile"><b>2.6 MB</b><span>weights file</span></div><div class="tile"><b>8 min</b><span>training, one consumer GPU</span></div><div class="tile"><b>36</b><span>held-out days, 19 with tornadoes</span></div><div class="tile"><b>3 km</b><span>352 x 184 grid, 5 days in 40 frames</span></div></div>
+    <p class="cap">A full 5-day product is a few MB. Once the GFS data is downloaded, running the network for a whole forecast took about 2 seconds; the download dominates.</p>
+    </section>
+<section id="checked">
+<h2>How it was checked</h2>
+    <p>On 864 forecast/analysis pairs from 36 whole days the network never saw (19 had tornadoes in the grid), against HRRR analyses and SPC tornado reports. Scores are Brier skill against climatology: above 0 beats always forecasting the base rate.</p>
+    <div class="check"><svg class="rel" viewBox="0 0 360 372" role="img" aria-label="Forecast daily tornado chance versus observed frequency"><line class="diag" x1="40.0" y1="340.0" x2="340.0" y2="40.0"/><line class="g" x1="40" x2="340" y1="340.0" y2="340.0"/><text x="34" y="344.0" text-anchor="end">0%</text><text x="40.0" y="358" text-anchor="middle">0%</text><line class="g" x1="40" x2="340" y1="240.0" y2="240.0"/><text x="34" y="244.0" text-anchor="end">10%</text><text x="140.0" y="358" text-anchor="middle">10%</text><line class="g" x1="40" x2="340" y1="140.0" y2="140.0"/><text x="34" y="144.0" text-anchor="end">20%</text><text x="240.0" y="358" text-anchor="middle">20%</text><line class="g" x1="40" x2="340" y1="40.0" y2="40.0"/><text x="34" y="44.0" text-anchor="end">30%</text><text x="340.0" y="358" text-anchor="middle">30%</text><circle cx="41.1" cy="338.9" r="5"/><text x="50.1" y="330.9">n=6,174,889</text><circle cx="70.6" cy="285.9" r="5"/><text x="79.6" y="299.9">n=296,699</text><circle cx="112.9" cy="226.2" r="5"/><text x="121.9" y="218.2">n=156,461</text><circle cx="165.8" cy="211.0" r="5"/><text x="174.8" y="225.0">n=116,662</text><circle cx="190.0" cy="213.2" r="5"/><text x="199.0" y="205.2">n=250,233</text><text x="190" y="372" text-anchor="middle">forecast chance</text><text x="10" y="190" transform="rotate(-90 10 190)" text-anchor="middle">observed frequency</text></svg><div>
+      <p style="margin-top:0"><b>Daily tornado chance</b> (within 25 miles, 12Z-12Z day), out-of-fold calibration on the held-out days.</p>
+      <table class="sk"><tr><th>Lead</th><th>Brier skill</th></tr><tr><td>Day 1</td><td>0.077</td></tr><tr><td>Day 3</td><td>0.079</td></tr><tr><td>Day 5</td><td>0.054</td></tr><tr><td>All leads</td><td>0.070</td></tr></table>
+      <p class="cap">Chart: forecast chance against how often a tornado was observed, per bin (n = samples in the bin). The dashed line is perfect reliability.</p></div></div>
+    <table class="sk"><tr><th>Reflectivity, Brier skill</th><th>Day 1</th><th>Day 3</th><th>Day 5</th></tr>
+      <tr><td>25 dBZ</td><td>0.108</td><td>0.042</td><td>0.013</td></tr>
+      <tr><td>35 dBZ</td><td>0.017</td><td>0.012</td><td>0.005</td></tr></table>
+    </section>
+<section id="limits">
+<h2>Honest limits</h2>
+    <ul class="limits">
+      <li>Few events: only 19 tornado days in the check. The numbers are noisy.</li>
+      <li>Tornado probabilities above about 15% were overconfident in testing, so a daily chance is never shown above 15%.</li>
+      <li>On neighbourhood overlap (fractions skill score, 33 km) of 25 dBZ reflectivity at day 1, raw GFS scored higher (0.46) than thresholded KyCast maps (0.25, at a 25% probability cut). KyCast's advantage is calibrated probabilities, not a sharper storm picture.</li>
+      <li>Reflectivity at days 3-5 is a statistical picture of where storms are possible, not a prediction of individual cells.</li>
+      <li>The reflectivity layer is derived from probabilities, not a physics simulation.</li>
+      <li>Trained on a limited sample of days (2021-2025) and one GFS version; behaviour in other regimes is unknown.</li>
+      <li>It was not compared with HRRR forecasts.</li>
+      <li>Experimental. Not an official forecast. Do not use it for safety decisions.</li>
+    </ul>
+</section>
+<p class="cap" style="margin-top:18px">Data: NOAA GFS and HRRR (NOAA open data on AWS), Storm Prediction Center storm reports, Esri basemap tiles in the screenshot. Not affiliated with or endorsed by any of them.</p>
 </main>
-
 <footer><div class="wrap">
-  <span>FRED is an AI. Don't rely on him for safety decisions. For warnings and emergencies, use the National Weather Service and your local officials.</span>
-  <span>&copy; 2026 FRED</span>
+  <span>KyCast is experimental and not an official forecast: do not use it for safety decisions. For warnings and emergencies, use the National Weather Service and your local officials.</span>
+  <span>&copy; 2026 KyCast</span>
 </div></footer>
 </body>
 </html>
