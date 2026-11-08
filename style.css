@@ -52,3 +52,37 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
   .feat,.check{grid-template-columns:1fr}
   nav a{margin-left:14px}
 }
+
+/* restored pages (newsletter, chat, what) */
+.mono{font-family:var(--mono);font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+.portrait{width:200px;height:200px;border-radius:50%;border:1px solid var(--rule)}
+.page{padding:56px 0 24px}
+section.page{border-top:0}
+.page>h1{margin-top:6px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--rule)}
+.item{padding:24px 28px 26px 0;border-bottom:1px solid var(--rule)}
+.item:nth-child(even){padding-left:28px;padding-right:0;border-left:1px solid var(--rule)}
+.item h3{margin:0 0 6px;font-size:1.05rem;font-weight:700}
+.item p{margin:0;color:var(--mute);font-size:.98rem}
+.chat{background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:22px 24px;font-family:var(--mono);font-size:.88rem;line-height:1.7;max-width:560px}
+.chat b{color:var(--accent);font-weight:600}
+.chat .u{color:var(--mute)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.two p{margin:0 0 14px}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent);margin-right:8px;vertical-align:middle}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:0}
+.card{display:block;padding:22px;border:1px solid var(--rule);border-radius:12px;background:var(--panel);text-decoration:none}
+.card:hover{border-color:var(--accent)}
+.card h3{font-size:1.25rem;margin:0 0 6px}
+.card p{margin:0 0 12px;color:var(--mute);font-size:.95rem}
+.card .go{font-family:var(--mono);font-size:.8rem;color:var(--accent)}
+.issues{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule)}
+.issues a{display:block;padding:20px 0;border-bottom:1px solid var(--rule);text-decoration:none}
+.issues a:hover b{color:var(--accent)}
+.issues b{display:block;font-size:1.3rem;margin:4px 0}
+.issues span:last-child{color:var(--mute)}
+.issue{max-width:680px}
+.issue h2{margin-top:44px}
+.issue h3{margin:26px 0 4px}
+.issue code{font-family:var(--mono);font-size:.88em;background:var(--panel);padding:1px 6px;border-radius:4px}
+@media(max-width:760px){.two,.cards,.grid{grid-template-columns:1fr}.item,.item:nth-child(even){padding:22px 0;border-left:0}}

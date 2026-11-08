@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>CellScope Newsletter</title>
+  <link>https://cellscope.live/newsletter.html</link>
+  <atom:link href="https://cellscope.live/feed.xml" rel="self" type="application/rss+xml"/>
+  <description>What shipped, what changed and what we learned across CellScope, FRED and KY-Net.</description>
+  <language>en-us</language>
+  <item>
+    <title>Issue 1: Hello from CellScope</title>
+    <link>https://cellscope.live/newsletter/001.html</link>
+    <guid>https://cellscope.live/newsletter/001.html</guid>
+    <pubDate>Sat, 07 Nov 2026 12:00:00 GMT</pubDate>
+    <description>FRED V0.2 lite GPU mode, game-day forecasts, FRED Shorts, richer Bluesky cards and the live KY-Net viewer.</description>
+  </item>
+</channel>
+</rss>
