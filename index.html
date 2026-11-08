@@ -3,45 +3,96 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CellScope — Weather, live</title>
-<meta name="description" content="FRED is a weather chat bot that streams live on YouTube. Severe weather, forecasts, and answers to whatever you type in chat.">
-<meta property="og:title" content="CellScope — Weather, live">
-<meta property="og:description" content="FRED is a weather chat bot that streams live on YouTube. Severe weather, forecasts, and answers to whatever you type in chat.">
-<meta property="og:image" content="og.png">
-<link rel="icon" href="fred.svg" type="image/svg+xml">
+<title>CellScope - Forecast research that puts honesty first</title>
+<meta name="description" content="CellScope is an independent lab building weather models whose confidence matches reality.">
+<meta property="og:title" content="CellScope - Forecast research that puts honesty first">
+<meta property="og:description" content="CellScope is an independent lab building weather models whose confidence matches reality.">
+<meta property="og:image" content="https://cellscope.live/og.png">
+<link rel="icon" href="kycast.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css?v=20261108">
+<link rel="stylesheet" href="home.css?v=20261109">
 </head>
-<body>
+<body class="home">
 <header><div class="wrap">
   <a class="brand" href="index.html">CellScope</a>
-  <nav><a href="what.html">What it does</a><a href="kynet.html">KyCast</a><a href="chat.html">Chat &amp; Watch</a><a href="newsletter.html">Newsletter</a></nav>
+  <nav><a href="kynet.html">Research</a><a href="kynet-viewer.html">Live model</a><a href="newsletter.html">Newsletter</a></nav>
 </div></header>
 
-<main class="wrap">
-<div class="hero">
-    <div>
-      <div class="mono"><span class="dot"></span>Streaming on YouTube</div>
-      <h1>A weather chat bot that's on the air.</h1>
-      <p class="lede">FRED watches the sky around the clock, talks through what's happening, and answers when you ask him something.</p>
-      <a class="btn solid" href="https://www.youtube.com/@FredWeatherAI" target="_blank" rel="noopener">Watch @FredWeatherAI</a>
-      <a class="btn" href="https://www.youtube.com/@FredWeatherAI/live" target="_blank" rel="noopener">Go to the live stream</a>
-    </div>
-    <img class="portrait" src="fred.svg" alt="FRED, a small round-headed robot with yellow eyes">
+<main>
+<section class="h-hero">
+  <svg class="contours" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <path d="M-50 520C150 430 260 560 460 480S760 300 960 380 1180 330 1260 290"/>
+    <path d="M-50 570C170 490 290 610 480 540S780 370 970 440 1190 400 1260 360"/>
+    <path d="M-50 620C190 550 310 660 500 600S800 440 980 500 1200 470 1260 430"/>
+    <path d="M-50 470C130 370 240 500 440 420S740 230 940 320 1170 260 1260 220"/>
+    <path d="M-50 420C110 310 220 440 420 360S720 160 920 260 1160 190 1260 150"/>
+    <path d="M-50 370C90 250 200 380 400 300S700 90 900 200 1150 120 1260 80"/>
+  </svg>
+  <div class="wrap">
+    <div class="mono"><span class="dot"></span>CellScope &middot; Weather model research</div>
+    <h1>Forecast research that puts honesty first.</h1>
+    <p class="lede">The storms ahead of us matter too much to guess at. CellScope is an independent lab building weather models whose confidence matches reality.</p>
+    <a class="btn solid" href="kynet-viewer.html">See the live model</a>
+    <a class="btn" href="kynet.html">Read the research</a>
   </div>
+</section>
 
+<div class="h-band"><div class="wrap">
+  <div class="h-stat"><b>1&ndash;2 days</b><span>The range KyCast is built for</span></div>
+  <div class="h-stat"><b>4&times; daily</b><span>A new run with every GFS cycle</span></div>
+  <div class="h-stat"><b>36 days</b><span>Held-out days every score is measured on</span></div>
+  <div class="h-stat"><b>Open</b><span>Scores and limits published, good and bad</span></div>
+</div></div>
 
-<section><h2>Explore</h2><div class="cards">
-<a class="card" href="what.html"><h3>What he does</h3><p>Severe weather, radar, forecasts, outlooks, tropics and quiet-day material.</p><span class="go">Read more &rarr;</span></a>
-<a class="card" href="kynet.html"><h3>KyCast</h3><p>An experimental model that downscales GFS into a 1-3 day Kentucky outlook.</p><span class="go">See the outlook &rarr;</span></a>
-<a class="card" href="chat.html"><h3>Chat &amp; Watch</h3><p>Ask him a question, request your town, and find where he streams.</p><span class="go">Join in &rarr;</span></a>
-</div></section>
+<section class="h-sec">
+  <div class="wrap h-cols">
+    <div>
+      <div class="mono">Our approach</div>
+      <h2>A forecast is only as useful as its confidence.</h2>
+    </div>
+    <p class="big">Saying a storm will hit is easy. Knowing how often you are right when you say 30% is hard. We build models that learn where weather happens, then check and correct their own confidence on days they have never seen, so a number means what it says.</p>
+  </div>
+</section>
+
+<section class="h-sec h-dark">
+  <div class="wrap">
+    <div class="mono">Principles</div>
+    <h2>How we work.</h2>
+    <ul class="h-list">
+      <li><b>Calibrated, not just confident.</b><span>Every probability is corrected and scored out of sample before it is shown.</span></li>
+      <li><b>Honest numbers.</b><span>We publish benchmarks against raw GFS, including the rows where we lose.</span></li>
+      <li><b>Small, focused models.</b><span>Built for the next one to two days, where most decisions get made.</span></li>
+      <li><b>Independent.</b><span>No agenda beyond forecasts you can reason about. Experimental, and labeled that way.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="h-sec">
+  <div class="wrap">
+    <div class="mono">Research</div>
+    <h2>KyCast.</h2>
+    <p class="big">Our flagship model downscales GFS into a high-resolution outlook for Kentucky and the surrounding region, with calibrated rain and tornado probabilities.</p>
+    <a class="h-feature" href="kynet.html">
+      <span class="mono">Model &middot; NEXT 1</span>
+      <h3>A model trained only for tomorrow.</h3>
+      <p>Benchmarks, calibration checks and honest limits for the current KyCast release.</p>
+      <span class="go">Read the research &rarr;</span>
+    </a>
+    <a class="h-feature" href="newsletter/003.html">
+      <span class="mono">Newsletter &middot; Issue 3</span>
+      <h3>A calibration discovery.</h3>
+      <p>What we found, and why it makes our forecast confidence more trustworthy.</p>
+      <span class="go">Read the issue &rarr;</span>
+    </a>
+  </div>
+</section>
 </main>
 
 <footer><div class="wrap">
-  <span>CellScope products, including KyCast and FRED, are automated and experimental. Don't rely on them for safety decisions. For warnings and emergencies, use the National Weather Service and your local officials.</span>
+  <span>CellScope models, including KyCast, are automated and experimental. Do not rely on them for safety decisions. For warnings and emergencies, use the National Weather Service and your local officials.</span>
   <span>&copy; 2026 CellScope</span>
 </div></footer>
 </body>
