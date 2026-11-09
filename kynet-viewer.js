@@ -234,7 +234,7 @@
     const st = S.meta.steps[S.step];
     $('#clkTime').textContent = fmt(st.valid, 'America/New_York');
     const cyc = new Date(S.meta.cycle);
-    $('#clkSub').textContent = `${hm(st.valid, 'America/Chicago')} in western KY  |  +${st.fh} h from GFS ${String(cyc.getUTCHours()).padStart(2, '0')}Z ${cyc.toUTCString().slice(5, 11)}`;
+    $('#clkSub').textContent = `${hm(st.valid, 'America/Chicago')} in western KY  |  +${st.fh} h from KyCast ${String(cyc.getUTCHours()).padStart(2, '0')}Z ${cyc.toUTCString().slice(5, 11)}`;
     $('#tl').value = S.step;
     const di = dayOf(S.step);
     $$('#days button').forEach((b, i) => b.classList.toggle('on', i === di));
@@ -365,13 +365,13 @@
     }
     throw err;
   }
-  function ageNote(meta) {                           // staleness follows the GFS cycle, not when the run happened to be made
+  function ageNote(meta) {                           // staleness follows the run cycle, not when the run happened to be made
     const hc = (Date.now() - new Date(meta.cycle)) / 36e5, hg = (Date.now() - new Date(meta.generated)) / 36e5;
     S.ageH = hc;
     const stale = hc > STALE_H;
     const words = h => h < 1 ? 'less than 1 hour' : h < 48 ? Math.round(h) + ' hours' : Math.round(h / 24) + ' days';
     $('#stale').classList.toggle('hidden', !stale);
-    if (stale) $('#stale').innerHTML = `<b>This forecast is out of date: its GFS data is ${words(hc)} old.</b> New runs normally appear every 6 hours. Do not use it as current guidance.`;
+    if (stale) $('#stale').innerHTML = `<b>This forecast is out of date: its data is ${words(hc)} old.</b> New runs normally appear every 6 hours. Do not use it as current guidance.`;
     return `${words(hg)} ago`;
   }
   async function loadRun(id) {
@@ -387,7 +387,7 @@
     S.step = Math.min(S.step, T - 1) || first;
     buildDays(); applyVisibility(); draw();
     const cyc = new Date(meta.cycle);
-    $('#runInfo').innerHTML = `${(meta.model && meta.model.name) || 'KyCast'}${(meta.model && String(meta.model.calibration || '').startsWith('smart')) ? '<br><span title="Rain/storm chances tuned by a second model that also sees the run 24 h older and extra GFS fields">Smart calibration: on</span>' : ''}<br>GFS ${cyc.toUTCString().slice(5, 22)} Z<br>${T} steps, ${meta.days.length} convective days<br>made ${ageNote(meta)}`;
+    $('#runInfo').innerHTML = `${(meta.model && meta.model.name) || 'KyCast'}${(meta.model && String(meta.model.calibration || '').startsWith('smart')) ? '<br><span title="Rain/storm chances tuned by a second model that also sees the run 24 h older and extra GFS fields">Smart calibration: on</span>' : ''}<br>Run ${cyc.toUTCString().slice(5, 22)} Z<br>${T} steps, ${meta.days.length} convective days<br>made ${ageNote(meta)}`;
     $('#empty').classList.add('hidden');
     S.loadedAt = Date.now();
   }
@@ -397,7 +397,7 @@
     const fromId = id => `${id.slice(0, 4)}-${id.slice(4, 6)}-${id.slice(6, 8)}T${id.slice(8, 10)}:00:00+00:00`;
     const runs = (man.runs && man.runs.length ? man.runs : [man.latest]).map(r => typeof r === 'string' ? { id: r, cycle: r === man.latest ? man.cycle : fromId(r) } : r);
     const sel = $('#runSel'); sel.innerHTML = '';
-    runs.forEach(r => { const o = document.createElement('option'); o.value = r.id; const d = new Date(r.cycle); o.textContent = `GFS ${d.toUTCString().slice(5, 22)} Z`; sel.appendChild(o); });
+    runs.forEach(r => { const o = document.createElement('option'); o.value = r.id; const d = new Date(r.cycle); o.textContent = `KyCast ${d.toUTCString().slice(5, 22)} Z`; sel.appendChild(o); });
     const id = selectRun || man.latest;
     sel.value = id;
     if (id !== S.runId || selectRun) await loadRun(id);

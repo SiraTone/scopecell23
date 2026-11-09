@@ -12,13 +12,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=20261110">
+<link rel="stylesheet" href="style.css?v=20261111">
 <link rel="stylesheet" href="home.css?v=20261110">
 </head>
 <body class="home">
 <header><div class="wrap">
   <a class="brand" href="index.html">CellScope</a>
-  <nav><a href="kynet.html">Research</a><a href="kynet-viewer.html">Live model</a><a href="newsletter.html">Newsletter</a><a href="fred.html">FRED</a></nav>
+  <nav><a href="kynet.html">Research</a><a href="kynet-viewer.html">Live model</a><a href="flight.html">Flight</a><a href="case-studies.html">Case Studies</a><a href="newsletter.html">Newsletter</a><a href="fred.html">FRED</a></nav>
 </div></header>
 
 <main>
@@ -31,6 +31,46 @@
     <path d="M-50 420C110 310 220 440 420 360S720 160 920 260 1160 190 1260 150"/>
     <path d="M-50 370C90 250 200 380 400 300S700 90 900 200 1150 120 1260 80"/>
   </svg>
+  <script>
+  (function(){
+    var svg=document.querySelector('.h-hero svg.contours');
+    if(!svg||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+    var els=[].slice.call(svg.querySelectorAll('path'));
+    // parse each path once: command letters + [x,y] pairs
+    var paths=els.map(function(p){
+      var d=p.getAttribute('d'),cmds=d.match(/[MCS]/g),
+          nums=d.match(/-?\d+(\.\d+)?/g).map(Number),pts=[];
+      for(var i=0;i<nums.length;i+=2)pts.push([nums[i],nums[i+1]]);
+      // implicit repeated S segments: expand to M, C, then one S per extra pair of points
+      cmds=['M','C'];
+      for(var s=4;s<pts.length;s+=2)cmds.push('S');
+      return {el:p,cmds:cmds,pts:pts};
+    });
+    var run=true,vis=true;
+    function frame(ms){
+      if(run&&vis){
+        var t=ms/1000;
+        paths.forEach(function(p,i){
+          var out='',k=0,ph=i*0.9,sp=0.16+i*0.015;
+          p.cmds.forEach(function(c){
+            var n=c==='C'?3:c==='S'?2:1;
+            out+=c;
+            for(var j=0;j<n;j++,k++){
+              var x=p.pts[k][0],y=p.pts[k][1];
+              y+=16*Math.sin(t*sp+x*0.0042+ph)+7*Math.sin(t*sp*1.7-x*0.0065+ph*1.3);
+              out+=(j?' ':'')+x+' '+y.toFixed(2);
+            }
+          });
+          p.el.setAttribute('d',out);
+        });
+      }
+      requestAnimationFrame(frame);
+    }
+    document.addEventListener('visibilitychange',function(){run=!document.hidden});
+    if('IntersectionObserver' in window)new IntersectionObserver(function(e){vis=e[0].isIntersecting}).observe(svg);
+    requestAnimationFrame(frame);
+  })();
+  </script>
   <div class="wrap">
     <div class="mono"><span class="dot"></span>CellScope &middot; Weather model research</div>
     <h1>Forecast research that puts honesty first.</h1>
