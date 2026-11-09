@@ -444,7 +444,7 @@
     const fromId = id => `${id.slice(0, 4)}-${id.slice(4, 6)}-${id.slice(6, 8)}T${id.slice(8, 10)}:00:00+00:00`;
     const runs = (man.runs && man.runs.length ? man.runs : [man.latest]).map(r => typeof r === 'string' ? { id: r, cycle: r === man.latest ? man.cycle : fromId(r) } : r);
     const sel = $('#runSel'); sel.innerHTML = '';
-    runs.forEach(r => { const o = document.createElement('option'); o.value = r.id; const d = new Date(r.cycle); o.textContent = `KyCast ${d.toUTCString().slice(5, 22)} Z`; sel.appendChild(o); });
+    runs.forEach(r => { const o = document.createElement('option'); o.value = r.id; const d = new Date(r.cycle); o.textContent = r.user ? `TEST: ${r.label || r.model || 'custom'} ${new Date(r.run_time || r.cycle).toUTCString().slice(5, 22)} Z` : `KyCast ${d.toUTCString().slice(5, 22)} Z`; sel.appendChild(o); });
     const id = selectRun || man.latest;
     sel.value = id;
     if (id !== S.runId || selectRun) await loadRun(id);
