@@ -123,7 +123,7 @@ input[type=range] { accent-color: var(--accent); }
 #views a.on { color: #04211e; background: var(--accent); font-weight: 600; }
 #views a:not(.on):hover { color: var(--text); border-color: var(--line); }
 
-#brand .mark{background:url(cellscope-mark-small.svg) center/contain no-repeat;box-shadow:none;border-radius:0;width:26px;height:26px}
+#brand .mark{background:url(cellscope-mark-small.svg?v=2) center/contain no-repeat;box-shadow:none;border-radius:0;width:26px;height:26px}
 
 /* slim scrollbars */
 * { scrollbar-width: thin; scrollbar-color: #2a3b58 transparent; }
