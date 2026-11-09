@@ -70,6 +70,10 @@
 
   // radar field on a coarse grid
   const dbz = new Uint8Array(GW * GH);
+  const sm = (a, b, x) => { const t = Math.max(0, Math.min(1, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
+  const edge = (x, y) => sm(0, 110, x) * sm(W, W - 110, x) * sm(0, 70, y) * sm(H, H - 80, y);
+  const EF = new Float32Array(GW * GH);
+  for (let gy = 0; gy < GH; gy++) for (let gx = 0; gx < GW; gx++) EF[gy * GW + gx] = edge(gx * G + 1, gy * G + 1);
   const off = document.createElement('canvas'); off.width = GW; off.height = GH;
   const octx = off.getContext('2d'), img = octx.createImageData(GW, GH);
   function field(t) {
@@ -106,7 +110,7 @@
         }
         const i = gy * GW + gx; dbz[i] = z;
         const j = i * 4, L = z * 4;
-        px[j] = LUT[L]; px[j + 1] = LUT[L + 1]; px[j + 2] = LUT[L + 2]; px[j + 3] = LUT[L + 3];
+        px[j] = LUT[L]; px[j + 1] = LUT[L + 1]; px[j + 2] = LUT[L + 2]; px[j + 3] = LUT[L + 3] * EF[i];
       }
     }
     octx.putImageData(img, 0, 0);
@@ -169,7 +173,7 @@
 
     // sky
     for (const s of stars) {
-      ctx.globalAlpha = 0.18 + 0.5 * (0.5 + 0.5 * Math.sin(s.p + simT * s.s));
+      ctx.globalAlpha = (0.18 + 0.5 * (0.5 + 0.5 * Math.sin(s.p + simT * s.s))) * (0.25 + 0.75 * edge(s.x, s.y));
       ctx.fillStyle = '#c9d8ff'; ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, 6.283); ctx.fill();
     }
     ctx.globalAlpha = 1;
@@ -182,7 +186,7 @@
     // lightning flashes + crawlers
     ctx.save(); ctx.globalCompositeOperation = 'lighter';
     for (let i = bolts.length - 1; i >= 0; i--) {
-      const b = bolts[i], a = boltA(b, simT);
+      const b = bolts[i], a = boltA(b, simT) * edge(b.x, b.y);
       if (a <= 0 && simT - b.t0 > b.dur) { bolts.splice(i, 1); continue; }
       const g = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, 90);
       g.addColorStop(0, 'rgba(210,220,255,' + 0.45 * a + ')'); g.addColorStop(1, 'rgba(210,220,255,0)');
@@ -209,8 +213,11 @@
       if (e < 5.6) return 1 - 0.25 * (e - 0.25) / 5.35;
       return Math.max(0.2, 0.75 - (e - 5.6) / 1.4 * 0.55);
     };
-    ctx.setLineDash([2, 5]); ctx.strokeStyle = 'rgba(70,105,170,.55)'; ctx.lineWidth = 1;
-    ctx.beginPath(); ROUTE.forEach((p, i) => i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1])); ctx.stroke(); ctx.setLineDash([]);
+    const routePath = () => { ctx.beginPath(); ROUTE.forEach((p, i) => i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1])); };
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    ctx.strokeStyle = 'rgba(4,6,12,.55)'; ctx.lineWidth = 9; routePath(); ctx.stroke();      // soft dark halo
+    ctx.strokeStyle = 'rgba(4,6,12,.85)'; ctx.lineWidth = 5; routePath(); ctx.stroke();      // casing
+    ctx.strokeStyle = 'rgba(190,215,255,.55)'; ctx.lineWidth = 1.6; routePath(); ctx.stroke(); // always-visible core
     const hz = [];
     for (let i = 0; i < ROUTE.length - 1; i++) {
       const [x1, y1] = ROUTE[i], [x2, y2] = ROUTE[i + 1];
@@ -218,8 +225,8 @@
       hz.push(zmax);
       const a = Math.min(litAt(i), litAt(i + 1));
       const col = zmax >= 50 ? '255,80,70' : zmax >= 40 ? '255,190,60' : '156,194,255';
-      ctx.strokeStyle = 'rgba(' + col + ',' + Math.max(0.1, a) + ')'; ctx.lineWidth = zmax >= 40 ? 2 : 1.5;
-      ctx.shadowColor = 'rgba(' + col + ',.9)'; ctx.shadowBlur = 8 * a;
+      ctx.strokeStyle = 'rgba(' + col + ',' + (0.45 + 0.55 * a) + ')'; ctx.lineWidth = zmax >= 40 ? 3 : 2.4;
+      ctx.shadowColor = 'rgba(' + col + ',.95)'; ctx.shadowBlur = 4 + 10 * a;
       ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
     }
     ctx.shadowBlur = 0;
@@ -228,11 +235,12 @@
       const z = Math.max(hz[i - 1] || 0, hz[i] || 0);
       const col = z >= 50 ? '255,90,80' : z >= 40 ? '255,195,70' : '96,150,255';
       const flare = !still && (wave - cum[i] / RL * TRAVEL) >= 0 && (wave - cum[i] / RL * TRAVEL) < 0.35 ? 1 - (wave - cum[i] / RL * TRAVEL) / 0.35 : 0;
-      const r = (end ? 4.4 : 2.3) * (1 + 0.8 * flare);
+      const r = (end ? 5 : 3) * (1 + 0.7 * flare);
       const g = ctx.createRadialGradient(p[0], p[1], 0, p[0], p[1], r * 5);
       g.addColorStop(0, 'rgba(' + col + ',' + 0.7 * a + ')'); g.addColorStop(1, 'rgba(' + col + ',0)');
       ctx.fillStyle = g; ctx.beginPath(); ctx.arc(p[0], p[1], r * 5, 0, 6.283); ctx.fill();
-      ctx.globalAlpha = 0.35 + 0.65 * a;
+      ctx.globalAlpha = 0.7 + 0.3 * a;
+      ctx.fillStyle = 'rgba(4,6,12,.9)'; ctx.beginPath(); ctx.arc(p[0], p[1], r + 2.2, 0, 6.283); ctx.fill();
       if (end) { ctx.fillStyle = '#05070d'; ctx.strokeStyle = '#eaf2ff'; ctx.lineWidth = 1.8; ctx.beginPath(); ctx.arc(p[0], p[1], r, 0, 6.283); ctx.fill(); ctx.stroke(); }
       else { ctx.fillStyle = '#f2f7ff'; ctx.beginPath(); ctx.arc(p[0], p[1], r, 0, 6.283); ctx.fill(); }
       if (!end && z >= 40) {               // storm on the route: a slow warning ring

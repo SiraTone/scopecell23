@@ -127,7 +127,7 @@ nav a.on{color:var(--ink);border-bottom:2px solid var(--accent);padding-bottom:3
 .soon h1{font-family:var(--serif);font-size:clamp(2.6rem,7vw,4.4rem);line-height:1.04;letter-spacing:-.02em;margin:22px 0 16px}
 .soon h1 span{color:var(--accent)}
 .soon .lede{max-width:46ch;margin:0 auto;color:var(--mute);font-size:1.12rem}
-.soon .flightfx{display:block;width:min(760px,100%);aspect-ratio:760/300;height:auto;margin:22px auto 0;-webkit-mask-image:radial-gradient(ellipse 72% 78% at 50% 55%,#000 62%,transparent 100%);mask-image:radial-gradient(ellipse 72% 78% at 50% 55%,#000 62%,transparent 100%)}
+.soon .flightfx{display:block;width:min(760px,100%);aspect-ratio:760/300;height:auto;margin:22px auto 0;}
 .soongrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:8px 0 8px}
 .soongrid div{border:1px solid var(--rule);background:var(--panel);border-radius:12px;padding:18px 20px}
 .soongrid h3{margin:0 0 6px;font-size:1.02rem}
