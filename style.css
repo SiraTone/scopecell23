@@ -140,3 +140,5 @@ nav a.on{color:var(--ink);border-bottom:2px solid var(--accent);padding-bottom:3
 .soonnote{border-left:2px solid var(--accent);padding:4px 0 4px 16px;color:var(--mute);font-size:.95rem;margin:26px 0}
 @media(max-width:720px){.soongrid{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){.soon .pill i,.soon .path .ar{animation:none}}
+
+.brand{display:inline-flex;align-items:center}.brand img{display:block;height:34px;width:auto}
