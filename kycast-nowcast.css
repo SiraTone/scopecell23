@@ -1,4 +1,4 @@
-/* nowcast page; base look comes from kynet-viewer.css */
+/* nowcast page; base look comes from kycast-viewer.css */
 #side .big { font: 600 18px var(--mono); }
 #side .small { font-size: 11px; margin-top: 6px; }
 #srcInfo { margin-top: 6px; font-size: 12px; }

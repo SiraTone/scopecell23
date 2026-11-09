@@ -1,7 +1,7 @@
 /* KyCast public viewer (internal name: kynet) (cellscope.live). Experimental, not an official forecast.
    Reads the latest published run (latest.json + per-run meta/frames/daily .gz) from the kynet-data branch and
    gunzips it in the browser. One state object drives every layer, the clock, the day summary and the readout.
-   Diag: window.__kynetDiag(). */
+   Diag: window.__kycastDiag(). */
 (() => {
   'use strict';
   const $ = (s, r = document) => r.querySelector(s);
@@ -300,7 +300,7 @@
   // ------------------------------------------------------------------ lines, towns, readout
   async function loadLines() {
     const rend = L.canvas({ pane: 'lines', padding: 0.3 });
-    const [geo] = await Promise.all([fetch('kynet-geo.json').then(r => r.json())]);
+    const [geo] = await Promise.all([fetch('kycast-geo.json').then(r => r.json())]);
     const ll = a => a.map(p => [p[1], p[0]]);
     S.county = L.layerGroup();
     geo.ky.forEach(a => L.polyline(ll(a), { renderer: rend, color: '#ffffff', weight: 0.7, opacity: 0.28, interactive: false }).addTo(S.county));
@@ -443,7 +443,7 @@
   map.on('click', () => document.body.classList.remove('sideopen'));
 
   // ------------------------------------------------------------------ boot
-  window.__kynetDiag = () => ({
+  window.__kycastDiag = () => ({
     run: S.runId, host: S.host, step: S.step, steps: S.meta ? S.meta.steps.length : 0, days: S.meta ? S.meta.days.length : 0,
     q: S.q, torMode: S.torMode, clock: $('#clkTime').textContent, day: S.meta ? dayOf(S.step) : null, ageH: S.ageH,
     stale: !$('#stale').classList.contains('hidden'),
@@ -451,7 +451,7 @@
     reflMax: S.fld.refl ? Math.max(...S.fld.refl) : null, torMax: S.fld.tor ? Math.max(...S.fld.tor) : null,
     legend: $('#legend').textContent, summary: $('#daySum').textContent, towns: S.towns.length,
   });
-  window.__kynetGo = go;
+  window.__kycastGo = go;
   loadLines().catch(() => {});
   refreshStatus().catch(fail);
   setInterval(() => { if (!document.hidden && S.runId && Date.now() - S.loadedAt > 30 * 60e3) refreshStatus().catch(() => {}); }, 5 * 60e3);   // pick up a new run without a reload

@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KyCast viewer</title>
+<meta name="description" content="Live viewer for KyCast, an experimental 1-3 day (up to 60 hours) Kentucky reflectivity and tornado-chance outlook. Not an official forecast.">
+<link rel="icon" href="favicon.ico" sizes="48x48">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="kycast-viewer.css">
+</head>
+<body>
+<header id="top">
+  <div id="brand"><span class="mark"></span><b>KYCAST</b><i>Kentucky forecast viewer</i></div>
+  <nav id="views"><a class="on" href="kycast-viewer.html">1-3 day forecast</a><a href="kycast-nowcast.html">Nowcast 0-2 h</a></nav>
+  <a id="back" href="kycast.html">About KyCast</a><a id="home" href="index.html" style="font-size:12.5px;color:var(--muted);text-decoration:none">CellScope home</a>
+  <button id="sideBtn" type="button" aria-controls="side">Layers</button>
+</header>
+<div id="banner"><b>EXPERIMENTAL - NOT AN OFFICIAL FORECAST - NOT FOR SAFETY DECISIONS</b><span>For warnings use the National Weather Service.</span></div>
+<div id="stale" class="hidden" role="alert"></div>
+<div id="app">
+  <aside id="side">
+    <div class="card">
+      <h3>Forecast run</h3>
+      <select id="runSel"></select>
+      <div id="runInfo" class="muted"></div>
+    </div>
+
+    <div class="card">
+      <h3>Layers</h3>
+      <div class="layer" data-l="refl">
+        <label class="sw"><input type="checkbox" id="lyRefl" checked><span></span>Reflectivity</label>
+        <input type="range" id="opRefl" min="10" max="100" value="85" title="opacity">
+        <div class="sub">
+          <div class="seg" id="confSeg">
+            <button data-q="pm" class="on" title="probability-matched: each dBZ level covers the area the model expects, placed where it is most likely">Balanced</button>
+            <button data-q="crisp" title="same balanced cuts, flat 25+ dBZ bands only: shows the line, not the rain shield">Crisp</button>
+            <button data-q="0.5" title="the dBZ exceeded with 50% chance">Likely</button>
+            <button data-q="0.25" title="the dBZ exceeded with 25% chance">Possible</button>
+            <button data-q="0.1" title="the dBZ exceeded with 10% chance">High</button>
+          </div>
+        </div>
+      </div>
+      <div class="layer" data-l="tor">
+        <label class="sw"><input type="checkbox" id="lyTor" checked><span></span>Tornado chance</label>
+        <input type="range" id="opTor" min="10" max="100" value="80" title="opacity">
+        <div class="sub">
+          <div class="seg" id="torSeg">
+            <button data-m="day" class="on" title="chance of a tornado within 25 mi on the 12Z-12Z convective day">Convective day</button>
+            <button data-m="step" title="chance within 25 mi in the 3 hours around this frame">3-hour</button>
+          </div>
+        </div>
+      </div>
+      <div class="layer" data-l="storm">
+        <label class="sw"><input type="checkbox" id="lyStorm"><span></span>Storm chance (35+ dBZ)</label>
+        <input type="range" id="opStorm" min="10" max="100" value="70" title="opacity">
+      </div>
+      <hr>
+      <div class="layer"><label class="sw"><input type="checkbox" id="lyCounty" checked><span></span>County lines</label></div>
+      <div class="layer"><label class="sw"><input type="checkbox" id="lyTown" checked><span></span>Towns</label></div>
+      <div class="layer">
+        <label class="sw nobox">Basemap</label>
+        <select id="baseSel"><option value="dark">Dark</option><option value="light">Light</option><option value="street">Streets</option></select>
+      </div>
+    </div>
+
+    <div class="card" id="daycard">
+      <h3>Convective day <span id="dayName"></span></h3>
+      <div id="daySum" class="daysum"></div>
+    </div>
+  </aside>
+
+  <main id="mapwrap">
+    <div id="map"></div>
+    <div id="legend"></div>
+    <div id="readout"><div class="muted">Move over the map for values</div></div>
+    <div id="empty" class="hidden"></div>
+    <div id="dock">
+      <div id="clock"><b id="clkTime">--</b><span id="clkSub"></span></div>
+      <div id="days"></div>
+      <div id="tlRow">
+        <button id="bPrev" title="previous (Left)">&#9664;</button>
+        <button id="bPlay" title="play / pause (Space)">&#9654;</button>
+        <button id="bNext" title="next (Right)">&#9654;</button>
+        <div id="tlWrap"><canvas id="spark" height="34"></canvas><input type="range" id="tl" min="0" max="0" value="0"></div>
+        <select id="spd"><option value="900">Slow</option><option value="500" selected>Normal</option><option value="250">Fast</option></select>
+      </div>
+    </div>
+  </main>
+</div>
+<noscript><p id="noscript">The viewer needs JavaScript.</p></noscript>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="kycast-viewer.js"></script>
+</body>
+</html>
