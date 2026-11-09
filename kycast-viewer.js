@@ -53,9 +53,56 @@
     baseLayer.setZIndex(1);
     store.set('base', k);
   }
-  const PANES = { refl: 420, storm: 430, tor: 440, lines: 450, towns: 460 };
+  const PANES = { refl: 420, storm: 430, spc: 435, tor: 440, lines: 450, towns: 460 };
   Object.entries(PANES).forEach(([n, z]) => { map.createPane(n).style.zIndex = z; });
   L.control.attribution({ prefix: false }).addAttribution('KyCast on NOAA GFS | basemap Esri').addTo(map);
+
+
+  // ------------------------------------------------------------------ SPC outlooks (public NWS GeoJSON, CORS-open)
+  const SPC_URL = 'https://www.spc.noaa.gov/products/outlook/';
+  const SPC = { layer: null, cache: {}, seq: 0 };
+  const spcTime = v => {                      // 202611091630 -> "Nov 9 1630Z"
+    const m = /^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})$/.exec(v || ''); if (!m) return '';
+    const d = new Date(Date.UTC(+m[1], +m[2] - 1, +m[3], +m[4], +m[5]));
+    return d.toUTCString().slice(8, 11) + ' ' + (+m[3]) + ' ' + m[4] + m[5] + 'Z';
+  };
+  async function spcLoad(key) {
+    const hit = SPC.cache[key];
+    if (hit && Date.now() - hit.t < 600000) return hit.d;
+    const r = await fetch(SPC_URL + key + '.nolyr.geojson', { cache: 'no-cache' });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const d = await r.json(); SPC.cache[key] = { t: Date.now(), d }; return d;
+  }
+  async function showSpc() {
+    const key = $('#spcSel').value, mine = ++SPC.seq;
+    store.set('spc', key);
+    if (SPC.layer) { map.removeLayer(SPC.layer); SPC.layer = null; }
+    $('#spcKey').innerHTML = ''; $('#spcInfo').textContent = key ? 'Loading...' : 'Choose an outlook to draw it on the map.';
+    if (!key) return;
+    let d;
+    try { d = await spcLoad(key); } catch (e) { if (mine === SPC.seq) $('#spcInfo').textContent = 'SPC outlook unavailable right now.'; return; }
+    if (mine !== SPC.seq) return;
+    const fs = (d.features || []).filter(f => f.properties && f.properties.fill && f.geometry);
+    const p0 = (d.features && d.features[0] && d.features[0].properties) || {};
+    if (!fs.length) { $('#spcInfo').textContent = 'No areas outlined: nothing above the lowest risk level.'; return; }
+    SPC.layer = L.geoJSON({ type: 'FeatureCollection', features: fs }, {
+      pane: 'spc', interactive: false,
+      style: f => ({ color: f.properties.stroke || f.properties.fill, weight: 1.6, fillColor: f.properties.fill, fillOpacity: 0.55, opacity: 0.95 }),
+    }).addTo(map);
+    $('#spcInfo').textContent = 'Valid ' + spcTime(p0.VALID) + ' to ' + spcTime(p0.EXPIRE) + ' (issued ' + spcTime(p0.ISSUE) + ')';
+    $('#spcKey').innerHTML = fs.map(f => '<i style="background:' + f.properties.fill + '" title="' + (f.properties.LABEL2 || '') + '">' + (f.properties.LABEL || '') + '</i>').join('');
+  }
+  function stepSpc(dir) {
+    const sel = $('#spcSel'), n = sel.options.length;
+    sel.selectedIndex = (sel.selectedIndex + dir + n) % n; showSpc();
+  }
+  $('#spcSel').onchange = showSpc;
+  $('#spcPrev').onclick = () => stepSpc(-1);
+  $('#spcNext').onclick = () => stepSpc(1);
+  $('#opSpc').oninput = () => { const g = map.getPane('spc'); if (g) g.style.opacity = $('#opSpc').value / 100; };
+  { const g = map.getPane('spc'); if (g) g.style.opacity = 0.6; }
+  { const k = store.get('spc'); if (k && [...$('#spcSel').options].some(o => o.value === k)) $('#spcSel').value = k; }
+  showSpc();
 
   // overlay canvases: 2x the model grid, rows spaced in Web-Mercator so they sit exactly under Leaflet
   const OV = {};

@@ -68,6 +68,36 @@
       </div>
     </div>
 
+    <div class="card" id="spcCard">
+      <h3>SPC outlook <span class="tag">NWS</span></h3>
+      <div class="spcrow">
+        <button id="spcPrev" type="button" title="previous outlook" aria-label="previous outlook">&#9664;</button>
+        <select id="spcSel" aria-label="SPC outlook">
+          <option value="">Off</option>
+          <optgroup label="Day 1">
+            <option value="day1otlk_cat">Day 1 - Categorical</option>
+            <option value="day1otlk_torn">Day 1 - Tornado</option>
+            <option value="day1otlk_wind">Day 1 - Wind</option>
+            <option value="day1otlk_hail">Day 1 - Hail</option>
+          </optgroup>
+          <optgroup label="Day 2">
+            <option value="day2otlk_cat">Day 2 - Categorical</option>
+            <option value="day2otlk_torn">Day 2 - Tornado</option>
+            <option value="day2otlk_wind">Day 2 - Wind</option>
+            <option value="day2otlk_hail">Day 2 - Hail</option>
+          </optgroup>
+          <optgroup label="Day 3">
+            <option value="day3otlk_cat">Day 3 - Categorical</option>
+            <option value="day3otlk_prob">Day 3 - Severe probability</option>
+          </optgroup>
+        </select>
+        <button id="spcNext" type="button" title="next outlook" aria-label="next outlook">&#9654;</button>
+      </div>
+      <input type="range" id="opSpc" min="10" max="100" value="60" title="opacity">
+      <div id="spcInfo" class="muted"></div>
+      <div id="spcKey"></div>
+    </div>
+
     <div class="card" id="daycard">
       <h3>Convective day <span id="dayName"></span></h3>
       <div id="daySum" class="daysum"></div>
