@@ -319,12 +319,14 @@
     if (!$('#lyTown').checked) return;
     const z = map.getZoom(), min = z < 7.5 ? 70000 : z < 8.5 ? 28000 : z < 9.5 ? 9000 : 2500;
     const light = BASES[$('#baseSel').value][1] === 'light';
-    S.towns.filter(c => c.pop >= min).forEach(c => {
+    const view = map.getBounds().pad(0.25);   // only the towns on screen: zoomed in, the full list is 1000+ DOM tooltips
+    S.towns.filter(c => c.pop >= min && view.contains([c.lat, c.lon])).forEach(c => {
       L.circleMarker([c.lat, c.lon], { pane: 'towns', radius: 2.5, weight: 1, color: light ? '#222' : '#000', fillColor: light ? '#222' : '#fff', fillOpacity: 1, interactive: false })
         .bindTooltip(c.city, { permanent: true, direction: 'right', offset: [3, 0], className: 'town' + (light ? ' light' : '') }).addTo(S.townLayer);
     });
   }
-  map.on('zoomend', drawTowns);
+  let townTimer = 0;
+  map.on('zoomend moveend', () => { clearTimeout(townTimer); townTimer = setTimeout(drawTowns, 150); });
   function nearestTown(lat, lon) {
     let best = null, bd = 1e9;
     for (const c of S.towns) { if (c.pop < 4000) break; const d = ((c.lat - lat) * 111) ** 2 + ((c.lon - lon) * 88) ** 2; if (d < bd) { bd = d; best = c; } }
