@@ -109,6 +109,9 @@ nav a.on{color:var(--ink);border-bottom:2px solid var(--accent);padding-bottom:3
 .study figure{margin:28px 0}
 .study figure img{width:100%;height:auto;border:1px solid var(--rule);display:block}
 .study figcaption{color:var(--mute);font-size:.88rem;margin-top:8px}
+.issue figure{margin:28px 0}
+.issue figure img{width:100%;height:auto;border:1px solid var(--rule);display:block}
+.issue figcaption{color:var(--mute);font-size:.88rem;margin-top:8px}
 .timeline{list-style:none;margin:20px 0;padding:0 0 0 18px;border-left:2px solid var(--rule)}
 .timeline li{margin:0 0 16px;position:relative}
 .timeline li::before{content:"";position:absolute;left:-24px;top:.6em;width:10px;height:10px;border-radius:50%;background:var(--accent)}

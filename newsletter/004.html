@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CellScope Newsletter - Issue 4</title>
+<meta name="description" content="KyCast NEXT 1.2 is live. It places storms better than NEXT 1 on every benchmark row, with the numbers and the limits.">
+<meta property="og:title" content="CellScope Newsletter - Issue 4: KyCast NEXT 1.2 is live">
+<meta property="og:description" content="KyCast NEXT 1.2 is live. It places storms better than NEXT 1 on every benchmark row, with the numbers and the limits.">
+<meta property="og:image" content="https://cellscope.live/newsletter/img/004-headline.png">
+<link rel="icon" href="../favicon.ico?v=2" sizes="48x48">
+<link rel="icon" href="../favicon.svg?v=2" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png?v=2">
+<link rel="alternate" type="application/rss+xml" title="CellScope Newsletter" href="../feed.xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css?v=20261112">
+</head>
+<body>
+<header><div class="wrap">
+  <a class="brand" href="../index.html" aria-label="CellScope"><img src="../cellscope-horizontal-ondark.svg?v=2" alt="CellScope" height="34"></a>
+  <nav><a href="../kycast.html">Research</a><a href="../kycast-viewer.html">Live model</a><a href="../flight.html">Flight</a><a href="../case-studies.html">Case Studies</a><a href="../newsletter.html" class="on" aria-current="page">Newsletter</a><a href="../fred.html">FRED</a></nav>
+</div></header>
+
+<main class="wrap">
+<article class="page issue">
+  <div class="mono">Issue 4 &middot; November 10, 2026</div>
+  <h1>KyCast NEXT 1.2 is live</h1>
+  <p class="sub">NEXT 1.2 is now the active KyCast model. On our held-out test days it placed storms better than NEXT 1 on every row we scored. Here are the numbers and the limits.</p>
+
+  <figure>
+    <img src="img/004-headline.png" width="1600" height="900" alt="KyCast NEXT 1.2 versus NEXT 1, storm placement score. 35 dBZ day 1: 0.129 to 0.202. 35 dBZ day 2: 0.104 to 0.137. 25 dBZ day 1: 0.451 to 0.508. 25 dBZ day 2: 0.370 to 0.397." loading="lazy">
+    <figcaption>Storm placement, NEXT 1 versus NEXT 1.2. Higher is better.</figcaption>
+  </figure>
+
+  <h2>What changed</h2>
+  <p>NEXT 1 only looked at the GFS model. NEXT 1.2 also reads HRRR, the high-resolution short-range model, for the first 48 hours of a run. HRRR sees the radar-scale detail that GFS smooths over, so it helps most when a storm is only a day away. Past 48 hours, NEXT 1.2 uses exactly the same method as NEXT 1, so those hours are unchanged.</p>
+
+  <h2>Where the storms are</h2>
+  <p>The Fractions Skill Score asks whether the forecast put storms in about the right place, allowing for a small miss. NEXT 1.2 scored higher than NEXT 1 on all four rows.</p>
+  <figure>
+    <img src="img/004-placement.png" width="1600" height="900" alt="Bar chart of storm placement score for NEXT 1 and NEXT 1.2. NEXT 1.2 is higher on 25 and 35 dBZ for both day 1 and day 2." loading="lazy">
+    <figcaption>The biggest gain is on strong storms (35 dBZ and up) on day 1: 0.129 to 0.202.</figcaption>
+  </figure>
+
+  <h2>How much to trust the percentages</h2>
+  <p>The Brier skill score measures whether a stated chance matches how often the event really happens. It also improved on every row.</p>
+  <figure>
+    <img src="img/004-probability.png" width="1600" height="900" alt="Bar chart of Brier skill for NEXT 1 and NEXT 1.2. NEXT 1.2 is higher on every row, for example 25 dBZ day 1 from 0.173 to 0.201." loading="lazy">
+    <figcaption>These gains are smaller than the placement gains. Daily tornado skill also edged up (day 1: 0.105 to 0.111), which is within noise, so we are not claiming it.</figcaption>
+  </figure>
+
+  <h2>What we are not saying</h2>
+  <ul class="limits">
+    <li><b>Small test set.</b> Scored on 36 held-out storm days, 468 samples for the first 48 hours. That is enough to compare two models, not enough to promise how any one day will go.</li>
+    <li><b>Out of fold.</b> Calibration was fitted on some days and scored on others, and neither model trained on any of them.</li>
+    <li><b>No new comparison with raw GFS.</b> This issue compares NEXT 1.2 with NEXT 1 only. Issue 2 said raw GFS still wins on day 1 for some measures, and we have not re-checked that here.</li>
+    <li><b>Still experimental.</b> Not an official forecast. Not for safety decisions. For warnings, use the National Weather Service and your local officials.</li>
+  </ul>
+
+  <h2>What is next</h2>
+  <p>We will rerun this same benchmark as more storm days come in and publish what it says, including if it goes the wrong way.</p>
+  <p class="cap">CellScope products are automated and experimental. For warnings and emergencies, use the National Weather Service and your local officials.</p>
+  <p><a class="btn solid" href="../kycast-viewer.html">Open the live viewer</a> <a class="btn" href="../newsletter.html">&larr; All issues</a></p>
+</article>
+</main>
+
+<footer><div class="wrap">
+  <span>CellScope products, including KyCast and FRED, are automated and experimental. Don't rely on them for safety decisions. For warnings and emergencies, use the National Weather Service and your local officials.</span>
+  <span>&copy; 2026 CellScope</span>
+</div></footer>
+</body>
+</html>
