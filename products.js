@@ -38,4 +38,32 @@
       $('p-img').remove();
     }
   })();
+
+  (async function () {
+    const A = ['https://raw.githubusercontent.com/SiraTone/scopecell23/refs/heads/cstor-archive', 'https://cdn.jsdelivr.net/gh/SiraTone/scopecell23@cstor-archive'];
+    let base, idx;
+    for (const b of A) { try { const r = await fetch(b + '/index.json?t=' + Math.floor(Date.now() / 60000)); if (r.ok) { base = b; idx = await r.json(); break; } } catch (e) {} }
+    const days = $('a-days'), runs = $('a-runs'), img = $('a-img');
+    if (!idx || !idx.length) { days.textContent = 'No archived runs yet.'; return; }
+    const byDay = {};
+    idx.forEach((r) => { (byDay[r.run_utc.slice(0, 10)] = byDay[r.run_utc.slice(0, 10)] || []).push(r); });
+    const pick = (el, group) => [...group.children].forEach((x) => x.classList.toggle('on', x === el));
+    function showDay(d, btn) {
+      pick(btn, days); runs.innerHTML = '';
+      byDay[d].forEach((r, i) => {
+        const b = document.createElement('button');
+        b.textContent = r.run_utc.slice(11, 13) + 'Z run';
+        b.onclick = () => { pick(b, runs); img.hidden = false; img.src = base + '/runs/' + r.id + '.png'; };
+        runs.appendChild(b);
+        if (i === byDay[d].length - 1) b.click();
+      });
+    }
+    Object.keys(byDay).sort().reverse().forEach((d, i) => {
+      const b = document.createElement('button');
+      b.textContent = MON[+d.slice(5, 7) - 1] + ' ' + (+d.slice(8, 10));
+      b.onclick = () => showDay(d, b);
+      days.appendChild(b);
+      if (i === 0) b.click();
+    });
+  })();
 })();
