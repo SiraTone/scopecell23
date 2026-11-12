@@ -21,7 +21,12 @@
       const { b, v: m } = await get('latest.json', true);
       const run = new Date(m.run_utc), now = new Date();
       $('p-run').textContent = run.getUTCDate() + ' ' + MON[run.getUTCMonth()] + ' ' + String(run.getUTCHours()).padStart(2, '0') + 'Z';
-      $('p-next').textContent = fmt(nextRun(m, now));
+      const nxt = nextRun(m, now), nel = $('p-next');
+      const tick = () => {
+        const s = Math.max(0, Math.floor((nxt - new Date()) / 1000)), p = (n) => String(n).padStart(2, '0');
+        nel.textContent = fmt(nxt) + ' (in ' + (s >= 3600 ? Math.floor(s / 3600) + 'h ' : '') + p(Math.floor(s % 3600 / 60)) + 'm ' + p(s % 60) + 's)';
+      };
+      tick(); setInterval(tick, 1000);
       const age = (now - run) / 3600e3;
       if (age > 9) { $('p-warn').hidden = false; $('p-warn').textContent = 'This run is ' + Math.round(age) + ' hours old. The model PC may be offline; newer data will appear here when it is back.'; }
       const bar = $('p-bar'), img = $('p-img');
