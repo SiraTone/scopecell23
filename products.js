@@ -44,6 +44,7 @@
     let base, idx;
     for (const b of A) { try { const r = await fetch(b + '/index.json?t=' + Math.floor(Date.now() / 60000)); if (r.ok) { base = b; idx = await r.json(); break; } } catch (e) {} }
     const days = $('a-days'), runs = $('a-runs'), img = $('a-img');
+    if (idx) idx = idx.filter((r) => r.run_utc >= '2026-11-12T00');
     if (!idx || !idx.length) { days.textContent = 'No archived runs yet.'; return; }
     const byDay = {};
     idx.forEach((r) => { (byDay[r.run_utc.slice(0, 10)] = byDay[r.run_utc.slice(0, 10)] || []).push(r); });
