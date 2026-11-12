@@ -21,11 +21,13 @@
   const TH = [5, 15, 25, 35, 45, 55];
   const QLAB = { pm: 'balanced', crisp: 'crisp', 0.5: 'likely', 0.25: 'possible', 0.1: 'high-end' };
   const QLONG = { pm: 'balanced', crisp: 'crisp cores', 0.5: 'likely (50% exceed)', 0.25: 'possible (25% exceed)', 0.1: 'high-end (10% exceed)' };
-  const DAYB = [2, 5, 10, 15, 30, 45, 60];
-  const STEPB = [0.5, 1, 2, 5, 10, 15, 30];
-  const BCOL = ['#2e9e47', '#8b5a2b', '#ffc800', '#ff2a2a', '#ff3df0', '#9b4de8', '#2a63e0'];
+  // Tornado bands start well under 2%: a typical Kentucky day peaks near 1%, and with a 2% floor the layer drew nothing at all.
+  const DAYB = [0.5, 1, 2, 5, 10, 15, 30];
+  const STEPB = [0.25, 0.5, 1, 2, 5, 10, 15];
+  const TCOL = { 0.25: '#4d6f8f', 0.5: '#5fa3b8', 1: '#86d6a4', 2: '#2e9e47', 5: '#8b5a2b', 10: '#ffc800', 15: '#ff2a2a', 30: '#ff3df0' };
+  const bcol = bands => bands.map(v => TCOL[v]);
+  const STORM_MIN = 0.02;                     // lowest chance of 35+ dBZ that is drawn (was 8%: most days never reach it)
   const hex = h => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5), 16)];
-  const BRGB = BCOL.map(hex);
   const DBZ = [[5, 4, 233, 231], [10, 1, 159, 244], [15, 3, 0, 244], [20, 2, 253, 2], [25, 1, 197, 1], [30, 0, 142, 0], [35, 253, 248, 2],
     [40, 229, 188, 0], [45, 253, 149, 0], [50, 253, 0, 0], [55, 212, 0, 0], [60, 188, 0, 0], [65, 248, 0, 253], [70, 152, 84, 198], [80, 255, 255, 255]];
   const DLUT = (() => {                       // dBZ*2 -> rgb
@@ -228,10 +230,10 @@
   }
   function paintStorm(o, f) {
     const { OW, OH } = S.lut, px = o.img.data;
-    const stops = [[0.08, 255, 236, 140, 0], [0.25, 255, 196, 70, 120], [0.5, 255, 128, 40, 190], [0.75, 236, 52, 64, 225], [1, 214, 40, 170, 245]];
+    const stops = [[STORM_MIN, 255, 240, 160, 70], [0.08, 255, 226, 120, 135], [0.25, 255, 196, 70, 175], [0.5, 255, 128, 40, 205], [0.75, 236, 52, 64, 228], [1, 214, 40, 170, 245]];
     for (let r = 0; r < OH; r++) for (let c = 0; c < OW; c++) {
       const v = sample(f, r, c), p = (r * OW + c) * 4;
-      if (v < 0.08) { px[p + 3] = 0; continue; }
+      if (v < STORM_MIN) { px[p + 3] = 0; continue; }
       let k = 0; while (k < stops.length - 2 && v > stops[k + 1][0]) k++;
       const a = stops[k], b = stops[k + 1], t = Math.min(1, Math.max(0, (v - a[0]) / (b[0] - a[0])));
       for (let q = 0; q < 4; q++) px[p + q] = a[q + 1] + (b[q + 1] - a[q + 1]) * t;
@@ -249,7 +251,7 @@
       const i = r * OW + c, b = band[i], p = i * 4;
       if (b < 0) { px[p + 3] = 0; continue; }
       const edge = (c + 1 < OW && band[i + 1] < b) || (c > 0 && band[i - 1] < b) || (r + 1 < OH && band[i + OW] < b) || (r > 0 && band[i - OW] < b);
-      const col = BRGB[b];
+      const col = hex(TCOL[bands[b]]);
       if (edge) { px[p] = col[0] * 0.8; px[p + 1] = col[1] * 0.8; px[p + 2] = col[2] * 0.8; px[p + 3] = 235; }
       else { px[p] = col[0]; px[p + 1] = col[1]; px[p + 2] = col[2]; px[p + 3] = 85; }
     }
@@ -320,7 +322,7 @@
     pk.forEach((v, i) => {
       const h = Math.min(H - 3, Math.sqrt(v / 0.05) * (H - 3));
       let b = -1; STEPB.forEach((s, k) => { if (v * 100 >= s) b = k; });
-      x.fillStyle = b < 0 ? '#2b3b52' : BCOL[b];
+      x.fillStyle = b < 0 ? '#2b3b52' : TCOL[STEPB[b]];
       x.fillRect(8 + i * bw + 1, H - Math.max(2, h), Math.max(2, bw - 2), Math.max(2, h));
     });
     x.fillStyle = '#fff'; x.fillRect(8 + S.step * bw + bw / 2 - 1, 0, 2, H);
@@ -335,10 +337,10 @@
       const lab = QLONG[S.q];
       h += `<div class="blk"><h4>Reflectivity dBZ - ${lab}</h4><div class="bar" style="background:linear-gradient(90deg,${grad})"></div><div class="ticks"><span>5</span><span>20</span><span>35</span><span>50</span><span>65</span></div></div>`;
     }
-    if ($('#lyStorm').checked) h += '<div class="blk"><h4>Chance of 35+ dBZ</h4><div class="bar" style="background:linear-gradient(90deg,rgba(255,196,70,.4),#ff8028,#ec3440,#d628aa)"></div><div class="ticks"><span>10%</span><span>50%</span><span>90%</span></div></div>';
+    if ($('#lyStorm').checked) h += '<div class="blk"><h4>Chance of 35+ dBZ</h4><div class="bar" style="background:linear-gradient(90deg,rgba(255,196,70,.4),#ff8028,#ec3440,#d628aa)"></div><div class="ticks"><span>2%</span><span>25%</span><span>50%</span><span>90%</span></div></div>';
     if ($('#lyTor').checked) {
       const b = S.torMode === 'step' ? STEPB : DAYB;
-      h += `<div class="blk"><h4>Tornado within 25 mi - ${S.torMode === 'step' ? '3-hour' : 'convective day'}</h4><div class="bands">${b.map((v, i) => `<i style="background:${BCOL[i]}">${v}%</i>`).join('')}</div>${S.torMode === 'step' ? '' : '<div class="ticks" style="margin-top:4px"><span>capped at 15%: higher values were not supported by held-out days</span></div>'}</div>`;
+      h += `<div class="blk"><h4>Tornado within 25 mi - ${S.torMode === 'step' ? '3-hour' : 'convective day'}</h4><div class="bands">${b.map(v => `<i style="background:${TCOL[v]}${v < 2 ? ';color:#06101c' : ''}">${v}%</i>`).join('')}</div>${S.torMode === 'step' ? '' : '<div class="ticks" style="margin-top:4px"><span>capped at 15%: higher values were not supported by held-out days</span></div>'}</div>`;
     }
     $('#legend').innerHTML = h;
     $('#legend').classList.toggle('hidden', !h);
