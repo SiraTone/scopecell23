@@ -52,7 +52,7 @@
     if (!m) return;
     const run = new Date(m.run_utc), note = $('s-note');
     note.hidden = false;
-    note.textContent = 'Wind and hail, convective day (12Z to 12Z). REFS run ' + run.getUTCDate() + ' ' + MON[run.getUTCMonth()] + ' ' + String(run.getUTCHours()).padStart(2, '0') + 'Z, updates at 00 and 12Z. Calibrated on summer storms; until the cool-season recalibration is done, winter wind and hail may run high.';
+    note.textContent = 'Wind and hail, convective day (12Z to 12Z). REFS run ' + run.getUTCDate() + ' ' + MON[run.getUTCMonth()] + ' ' + String(run.getUTCHours()).padStart(2, '0') + 'Z, updates at 00 and 12Z. Calibrated separately for the warm and cool seasons.';
     const bar = $('s-bar'), img = $('p-img');
     ['wind', 'hail', 'sig_wind', 'sig_hail'].filter((k) => m.frames.includes('hz_' + k + '.png')).forEach((k) => {
       const btn = document.createElement('button'), pk = m.peaks && m.peaks[k];
