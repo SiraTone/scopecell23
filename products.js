@@ -67,24 +67,37 @@
   })();
 
   (async function () {
-    const A = ['https://raw.githubusercontent.com/SiraTone/scopecell23/refs/heads/cstor-archive', 'https://cdn.jsdelivr.net/gh/SiraTone/scopecell23@cstor-archive'];
-    let base, idx;
-    for (const b of A) { try { const r = await fetch(b + '/index.json?t=' + Math.floor(Date.now() / 60000)); if (r.ok) { base = b; idx = await r.json(); break; } } catch (e) {} }
-    const days = $('a-days'), runs = $('a-runs'), img = $('a-img');
-    if (idx) idx = idx.filter((r) => r.run_utc >= '2026-11-12T00');
-    if (!idx || !idx.length) { days.textContent = 'No archived runs yet.'; return; }
-    const byDay = {};
-    idx.forEach((r) => { (byDay[r.run_utc.slice(0, 10)] = byDay[r.run_utc.slice(0, 10)] || []).push(r); });
+    async function load(br) {
+      for (const b of ['https://raw.githubusercontent.com/SiraTone/scopecell23/refs/heads/' + br, 'https://cdn.jsdelivr.net/gh/SiraTone/scopecell23@' + br]) {
+        try { const r = await fetch(b + '/index.json?t=' + Math.floor(Date.now() / 60000)); if (r.ok) return { base: b, idx: await r.json() }; } catch (e) {}
+      }
+      return { base: null, idx: [] };
+    }
+    const [T, S] = await Promise.all([load('cstor-archive'), load('svr-archive')]);
+    const days = $('a-days'), runs = $('a-runs'), svr = $('a-svr'), img = $('a-img');
+    const NAMES = { wind: 'Wind', hail: 'Hail', sig_wind: 'Sig wind', sig_hail: 'Sig hail' };
+    const byDay = {}, add = (r, kind) => { const d = r.run_utc.slice(0, 10); (byDay[d] = byDay[d] || { t: [], s: [] })[kind].push(r); };
+    T.idx.filter((r) => r.run_utc >= '2026-11-12T00').forEach((r) => add(r, 't'));
+    S.idx.forEach((r) => add(r, 's'));
+    if (!Object.keys(byDay).length) { days.textContent = 'No archived runs yet.'; return; }
     const pick = (el, group) => [...group.children].forEach((x) => x.classList.toggle('on', x === el));
+    const pickMap = (el) => [...runs.children, ...svr.children].forEach((x) => x.classList.toggle('on', x === el));
     function showDay(d, btn) {
-      pick(btn, days); runs.innerHTML = '';
-      byDay[d].forEach((r, i) => {
+      pick(btn, days); runs.innerHTML = ''; svr.innerHTML = '';
+      byDay[d].t.forEach((r) => {
         const b = document.createElement('button');
-        b.textContent = r.run_utc.slice(11, 13) + 'Z run';
-        b.onclick = () => { pick(b, runs); img.hidden = false; img.src = base + '/runs/' + r.id + '.png'; };
+        b.textContent = r.run_utc.slice(11, 13) + 'Z tornado';
+        b.onclick = () => { pickMap(b); img.hidden = false; img.src = T.base + '/runs/' + r.id + '.png'; };
         runs.appendChild(b);
-        if (i === byDay[d].length - 1) b.click();
       });
+      byDay[d].s.forEach((r) => ['wind', 'hail', 'sig_wind', 'sig_hail'].filter((k) => r.hazards.includes(k)).forEach((k) => {
+        const b = document.createElement('button');
+        b.textContent = r.run_utc.slice(11, 13) + 'Z ' + NAMES[k];
+        b.onclick = () => { pickMap(b); img.hidden = false; img.src = S.base + '/runs/' + r.id + '_' + k + '.png'; };
+        svr.appendChild(b);
+      }));
+      const first = runs.lastElementChild || svr.firstElementChild;
+      if (first) first.click();
     }
     Object.keys(byDay).sort().reverse().forEach((d, i) => {
       const b = document.createElement('button');
