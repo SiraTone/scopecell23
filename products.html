@@ -27,8 +27,7 @@
 <section class="page"><h1>Products</h1>
   <p class="lede" style="max-width:52ch">Everything CellScope publishes, with what each one is and when it updates.</p>
   <div class="cards" style="grid-template-columns:repeat(2,1fr)">
-    <a class="card" href="#cssvr"><h3>CS-SVR</h3><p>Tornado, wind and hail probability, REFS run through Nadocast's 2022 weights. Updates twice a day.</p><span class="go">View below</span></a>
-    <a class="card" href="#cstor"><h3>CS-TOR</h3><p>Tornado probability, HRRR run through Nadocast's 2021 weights. Updates every 6 hours.</p><span class="go">View below</span></a>
+    <a class="card" href="#cstor"><h3>CS-TOR</h3><p>Tornado probability from HRRR (Nadocast 2021 weights), plus wind and hail from REFS (Nadocast 2022 weights).</p><span class="go">View below</span></a>
     <a class="card" href="kycast-viewer.html"><h3>KyCast</h3><p>1-3 day severe weather forecasts and a 0-2 hour nowcast.</p><span class="go">Open the viewer</span></a>
     <a class="card" href="fred.html"><h3>FRED</h3><p>Automated weather video from SPC outlooks.</p><span class="go">Learn more</span></a>
     <a class="card" href="flight.html"><h3>Flight</h3><p>Aviation weather awareness. In development.</p><span class="go">Coming soon</span></a>
@@ -36,7 +35,7 @@
 </section>
 
 <section id="cstor"><h2>CS-TOR</h2>
-  <p class="sub">Chance of a tornado within 25 miles of a point. Research product, not an NWS or SPC forecast.</p>
+  <p class="sub">Chance of a tornado within 25 miles of a point, with wind and hail maps below. Research product, not an NWS or SPC forecast.</p>
   <div class="sched">
     <div><b>Latest run</b><span id="p-run">loading</span></div>
     <div><b>Next run (est.)</b><span id="p-next">-</span></div>
@@ -45,16 +44,7 @@
   <p id="p-warn" class="stale" hidden></p>
   <div class="pv"><img id="p-img" alt="CS-TOR tornado probability map"></div>
   <div class="pvbar" id="p-bar"></div>
-</section>
-<section id="cssvr"><h2>CS-SVR</h2>
-  <p class="sub">Chance of each hazard within 25 miles of a point over the convective day (12Z to 12Z). The 12Z tornado map blends in CS-TOR. Research product, not an NWS or SPC forecast.</p>
-  <div class="sched">
-    <div><b>Latest run</b><span id="s-run">loading</span></div>
-    <div><b>Next run (est.)</b><span id="s-next">-</span></div>
-    <div><b>Schedule</b><span>00, 12Z cycles</span></div>
-  </div>
-  <p id="s-warn" class="stale" hidden></p>
-  <div class="pv"><img id="s-img" alt="CS-SVR hazard probability map"></div>
+  <p class="sub" id="s-note" style="margin:18px 0 8px" hidden></p>
   <div class="pvbar" id="s-bar"></div>
 </section>
 <section id="archive"><h2>Past runs</h2>
@@ -69,6 +59,6 @@
   <span>CellScope tools are automated and experimental. Don't rely on them for safety decisions. For flight planning, use an official weather briefing. For warnings and emergencies, use the National Weather Service and your local officials.</span>
   <span>&copy; 2026 CellScope</span>
 </div></footer>
-<script src="products.js?v=5" defer></script>
+<script src="products.js?v=6" defer></script>
 </body>
 </html>

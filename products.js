@@ -30,7 +30,7 @@
       const age = (now - run) / 3600e3;
       if (age > 9) { $('p-warn').hidden = false; $('p-warn').textContent = 'This run is ' + Math.round(age) + ' hours old. The model PC may be offline; newer data will appear here when it is back.'; }
       const bar = $('p-bar'), img = $('p-img');
-      const show = (f, btn) => { img.src = b + '/' + f + '?v=' + m.published; [...bar.children].forEach((x) => x.classList.toggle('on', x === btn)); };
+      const show = (f, btn) => { img.src = b + '/' + f + '?v=' + m.published; [...bar.children, ...$('s-bar').children].forEach((x) => x.classList.toggle('on', x === btn)); };
       m.frames.forEach((f, i) => {
         const btn = document.createElement('button');
         btn.textContent = i === 0 ? 'Whole period' : '+' + f.match(/f(\d+)/)[1] + 'h';
@@ -46,30 +46,23 @@
 
   (async function () {
     const SB = ['https://raw.githubusercontent.com/SiraTone/scopecell23/refs/heads/svr-data', 'https://cdn.jsdelivr.net/gh/SiraTone/scopecell23@svr-data'];
-    const NAMES = { tornado: 'Tornado', wind: 'Wind', hail: 'Hail', sig_tornado: 'Sig tornado', sig_wind: 'Sig wind', sig_hail: 'Sig hail' };
+    const NAMES = { wind: 'Wind', hail: 'Hail', sig_wind: 'Sig wind', sig_hail: 'Sig hail' };
     let b, m;
     for (const x of SB) { try { const r = await fetch(x + '/latest.json?t=' + Math.floor(Date.now() / 60000)); if (r.ok) { b = x; m = await r.json(); break; } } catch (e) {} }
-    if (!m) { $('s-run').textContent = 'not published yet'; $('s-img').remove(); return; }
-    const run = new Date(m.run_utc), now = new Date();
-    $('s-run').textContent = run.getUTCDate() + ' ' + MON[run.getUTCMonth()] + ' ' + String(run.getUTCHours()).padStart(2, '0') + 'Z';
-    const nxt = nextRun(m, new Date(Math.max(+now, +run + ((m.schedule && m.schedule.typical_lag_h) || 4.5) * 3600e3 + 60e3))), nel = $('s-next');
-    const tick = () => {
-      const s = Math.max(0, Math.floor((nxt - new Date()) / 1000)), p = (n) => String(n).padStart(2, '0');
-      nel.textContent = fmt(nxt) + ' (in ' + (s >= 3600 ? Math.floor(s / 3600) + 'h ' : '') + p(Math.floor(s % 3600 / 60)) + 'm ' + p(s % 60) + 's)';
-    };
-    tick(); setInterval(tick, 1000);
-    const age = (now - run) / 3600e3;
-    if (age > 18) { $('s-warn').hidden = false; $('s-warn').textContent = 'This run is ' + Math.round(age) + ' hours old. The model PC may be offline; newer data will appear here when it is back.'; }
-    const bar = $('s-bar'), img = $('s-img');
-    const show = (f, btn) => { img.src = b + '/' + f + '?v=' + m.published; [...bar.children].forEach((x) => x.classList.toggle('on', x === btn)); };
-    const order = ['tornado', 'wind', 'hail', 'sig_tornado', 'sig_wind', 'sig_hail'];
-    order.filter((k) => m.frames.includes('hz_' + k + '.png')).forEach((k, i) => {
-      const btn = document.createElement('button');
-      const pk = m.peaks && m.peaks[k];
+    if (!m) return;
+    const run = new Date(m.run_utc), note = $('s-note');
+    note.hidden = false;
+    note.textContent = 'Wind and hail, convective day (12Z to 12Z). REFS run ' + run.getUTCDate() + ' ' + MON[run.getUTCMonth()] + ' ' + String(run.getUTCHours()).padStart(2, '0') + 'Z, updates at 00 and 12Z.';
+    const bar = $('s-bar'), img = $('p-img');
+    ['wind', 'hail', 'sig_wind', 'sig_hail'].filter((k) => m.frames.includes('hz_' + k + '.png')).forEach((k) => {
+      const btn = document.createElement('button'), pk = m.peaks && m.peaks[k];
       btn.textContent = NAMES[k] + (pk != null ? ' (' + (pk >= 0.1 ? Math.round(pk * 100) : (pk * 100).toFixed(1)) + '%)' : '');
-      btn.onclick = () => show('hz_' + k + '.png', btn);
+      btn.onclick = () => {
+        if (!img.isConnected) return;
+        img.src = b + '/hz_' + k + '.png?v=' + m.published;
+        [...$('p-bar').children, ...bar.children].forEach((x) => x.classList.toggle('on', x === btn));
+      };
       bar.appendChild(btn);
-      if (i === 0) show('hz_' + k + '.png', btn);
     });
   })();
 
