@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Locked - CellScope Case Study</title>
+<meta name="description" content="A CellScope case study is coming soon.">
+<meta property="og:title" content="CellScope Case Study - Coming soon">
+<meta property="og:description" content="A CellScope case study is coming soon.">
+<meta property="og:image" content="https://cellscope.live/og.png">
+<link rel="icon" href="../favicon.ico?v=2" sizes="48x48">
+<link rel="icon" href="../favicon.svg?v=2" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png?v=2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css?v=20261114">
+</head>
+<body>
+<header><div class="wrap">
+  <a class="brand" href="../index.html" aria-label="CellScope"><img src="../cellscope-horizontal-ondark.svg?v=2" alt="CellScope" height="34"></a>
+  <nav><a href="../kycast.html">Research</a><a href="../kycast-viewer.html">Live model</a><a href="../products.html">Products</a><a href="../flight.html">Flight</a><a href="../case-studies.html" class="on" aria-current="page">Case Studies</a><a href="../newsletter.html">Newsletter</a><a href="../fred.html">FRED</a></nav>
+</div></header>
+
+<main class="wrap">
+<section class="soon lock">
+  <span class="pill"><i></i>Case study &middot; Locked</span>
+  <h1>Unlocks <span>soon</span></h1>
+  <p class="lede">This case study is not published yet. Nothing is hidden on this page; the write-up does not exist on the site until the countdown ends.</p>
+  <div class="cd" id="cd" role="timer" aria-live="off">
+    <div><b id="cd-d">--</b><span>Days</span></div>
+    <div><b id="cd-h">--</b><span>Hours</span></div>
+    <div><b id="cd-m">--</b><span>Minutes</span></div>
+    <div><b id="cd-s">--</b><span>Seconds</span></div>
+  </div>
+  <p class="cdnote" id="cdnote">Unlocks <span id="cd-when"></span></p>
+</section>
+</main>
+
+<footer><div class="wrap">
+  <span>Case studies are retrospective analysis and are not forecasts. For warnings and emergencies, use the National Weather Service and your local officials.</span>
+  <span>&copy; 2026 CellScope</span>
+</div></footer>
+
+<script>
+(function(){
+  // Release time. Change this one line (and in ../case-studies.html) to move the date.
+  var RELEASE = Date.parse("2026-11-21T12:00:00-05:00");
+  var el = function(i){ return document.getElementById(i); };
+  var pad = function(n){ return n < 10 ? "0" + n : "" + n; };
+  try {
+    el("cd-when").textContent = new Date(RELEASE).toLocaleString(undefined,
+      {weekday:"long", month:"long", day:"numeric", hour:"numeric", minute:"2-digit", timeZoneName:"short"});
+  } catch (e) {}
+  function tick(){
+    var left = RELEASE - Date.now();
+    if (left <= 0) {
+      el("cd").style.display = "none";
+      el("cdnote").textContent = "The countdown has ended. Check back shortly; the study is being published.";
+      return;
+    }
+    var s = Math.floor(left / 1000);
+    el("cd-d").textContent = Math.floor(s / 86400);
+    el("cd-h").textContent = pad(Math.floor(s % 86400 / 3600));
+    el("cd-m").textContent = pad(Math.floor(s % 3600 / 60));
+    el("cd-s").textContent = pad(s % 60);
+    setTimeout(tick, 250);
+  }
+  tick();
+})();
+</script>
+</body>
+</html>

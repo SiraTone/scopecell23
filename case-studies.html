@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=20261111">
+<link rel="stylesheet" href="style.css?v=20261114">
 </head>
 <body>
 <header><div class="wrap">
@@ -35,7 +35,7 @@
   <li><a href="case-studies/example.html"><img src="case-studies/example/hero.jpg" alt="" loading="lazy"><div class="body"><span class="mono">Tornado outbreak &middot; Mar 31, 2023</span><b>Title of the study</b><span>One or two sentences on what it covers.</span></div></a></li>
   -->
   <ul class="studies">
-    <li class="empty" style="grid-column:1/-1">First case studies are on the way.</li>
+    <li><a class="locked" href="case-studies/reviving-nadocast.html"><span class="mono">Locked &middot; Coming soon</span><b>Reviving Nadocast</b><span class="mini" id="cs-cd">--</span></a></li>
   </ul>
 </section>
 </main>
@@ -44,5 +44,18 @@
   <span>Case studies are retrospective analysis and are not forecasts. For warnings and emergencies, use the National Weather Service and your local officials.</span>
   <span>&copy; 2026 CellScope</span>
 </div></footer>
+<script>
+(function(){
+  var RELEASE = Date.parse("2026-11-21T12:00:00-05:00"), el = document.getElementById("cs-cd");
+  function tick(){
+    var l = RELEASE - Date.now();
+    if (l <= 0) { el.textContent = "Publishing soon"; return; }
+    var s = Math.floor(l/1000), p = function(n){return n<10?"0"+n:n};
+    el.textContent = Math.floor(s/86400)+"d "+p(Math.floor(s%86400/3600))+"h "+p(Math.floor(s%3600/60))+"m "+p(s%60)+"s";
+    setTimeout(tick, 500);
+  }
+  tick();
+})();
+</script>
 </body>
 </html>
