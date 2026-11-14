@@ -1,0 +1,58 @@
+{
+ "model": "CS-TOR V0.1: HRRR-only Nadocast 2020/21 weights (uncalibrated union of hourly)",
+ "run_utc": "2026-11-14T12:00:00Z",
+ "hours": [
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17
+ ],
+ "valid_start_utc": "2026-11-14T14:00:00Z",
+ "valid_end_utc": "2026-11-15T05:00:00Z",
+ "n_points": 87462,
+ "day_max": 0.088163316,
+ "generated_utc": "2026-11-14T13:33:39Z",
+ "product": "CS-TOR",
+ "published": "2026-11-14T13:33:57Z",
+ "schedule": {
+  "cycles_utc": [
+   0,
+   6,
+   12,
+   18
+  ],
+  "check": "hourly",
+  "typical_lag_h": 2.5
+ },
+ "frames": [
+  "day.png",
+  "hourly_f02.png",
+  "hourly_f03.png",
+  "hourly_f04.png",
+  "hourly_f05.png",
+  "hourly_f06.png",
+  "hourly_f07.png",
+  "hourly_f08.png",
+  "hourly_f09.png",
+  "hourly_f10.png",
+  "hourly_f11.png",
+  "hourly_f12.png",
+  "hourly_f13.png",
+  "hourly_f14.png",
+  "hourly_f15.png",
+  "hourly_f16.png",
+  "hourly_f17.png"
+ ]
+}
