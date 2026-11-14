@@ -48,6 +48,7 @@
     street: ['https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', 'light'],
   };
   const map = L.map('map', { zoomSnap: 0.25, minZoom: 5, maxZoom: 11, zoomControl: true, attributionControl: false }).setView([37.75, -85.75], 7.25);
+  window.__kyMap = map;
   let baseLayer = null;
   function setBase(k) {
     if (baseLayer) map.removeLayer(baseLayer);

@@ -143,3 +143,51 @@ input[type=range] { accent-color: var(--accent); }
 #spcInfo { margin-top: 8px; font-size: 12px; }
 #spcKey { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
 #spcKey i { font: normal 11px var(--mono); padding: 2px 8px; border-radius: 99px; color: #08111c; border: 1px solid rgba(255,255,255,.25); }
+
+/* ---------- themed dropdowns + satellite layer (ported from the studio) */
+/* ---------- selects: dark popup, custom arrow, focus ring */
+select { color-scheme: dark; appearance: none; -webkit-appearance: none; cursor: pointer; padding-right: 28px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M1 1l4 4 4-4' fill='none' stroke='%238ea1bb' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  background-repeat: no-repeat; background-position: right 10px center; transition: border-color .12s, background-color .12s; }
+select:hover { border-color: #2f4766; background-color: #1a2a40; }
+select:focus-visible, #satRef:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+select option { background: var(--panel); color: var(--text); }
+
+/* Themed dropdown list + scrollbar. base-select (Chromium 135+) makes the popup
+   stylable; older engines fall back to the native dark popup with a thin scrollbar. */
+select { scrollbar-width: thin; scrollbar-color: #35506f var(--panel); }
+select::-webkit-scrollbar { width: 8px; }
+select::-webkit-scrollbar-track { background: var(--panel); }
+select::-webkit-scrollbar-thumb { background: #35506f; border-radius: 4px; }
+select::-webkit-scrollbar-thumb:hover { background: var(--accent2); }
+@supports (appearance: base-select) {
+  select, select::picker(select) { appearance: base-select; }
+  select::picker-icon { display: none; }
+  select::picker(select) { background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+    padding: 5px; margin: 4px 0 0; max-height: 300px; overflow-y: auto; color: var(--text);
+    box-shadow: 0 12px 32px rgba(0,0,0,.55); scrollbar-width: thin; scrollbar-color: #35506f transparent;
+    top: anchor(bottom); left: anchor(left); right: auto; bottom: auto; min-width: anchor-size(width);
+    position-try-fallbacks: flip-block; }
+  select option { padding: 7px 10px; border-radius: 8px; background: transparent; }
+  select option:hover, select option:focus-visible { background: var(--panel2); }
+  select option:checked { background: rgba(59,130,246,.2); color: var(--accent); }
+  select option::checkmark { display: none; }
+}
+
+/* ---------- satellite layer */
+select optgroup { background: var(--panel2); color: var(--muted); font-style: normal; font-weight: 600; }
+select optgroup option { color: var(--text); font-weight: 400; }
+#satProd { margin-top: 2px; }
+.oprow { display: flex; align-items: center; gap: 8px; margin-top: 9px; color: var(--muted); font-size: 12px; }
+.oprow input[type=range] { flex: 1; margin: 0; width: auto; }
+.oprow b { font: 11px var(--mono); color: var(--text); min-width: 34px; text-align: right; font-weight: 500; }
+#satStat { display: flex; align-items: center; gap: 7px; margin-top: 8px; font-size: 11px; color: var(--muted); min-height: 22px; }
+#satStat #satNote { flex: 1; min-width: 0; }
+#satDot { width: 7px; height: 7px; border-radius: 50%; background: #4a5b73; flex: none; }
+#satStat.ok #satDot { background: #3fe05a; box-shadow: 0 0 6px #3fe05a99; }
+#satStat.load #satDot { background: #ffc800; animation: satpulse 1s ease-in-out infinite; }
+#satStat.err #satDot { background: var(--warn); }
+#satStat.err #satNote { color: var(--warn); }
+#satRef { background: var(--panel2); border: 0; border-radius: 6px; width: 24px; height: 22px; cursor: pointer; color: var(--muted); font-size: 14px; line-height: 1; }
+#satRef:hover { color: var(--text); background: #24384f; }
+@keyframes satpulse { 50% { opacity: .35; } }

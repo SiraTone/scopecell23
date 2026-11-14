@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
-<link rel="stylesheet" href="kycast-viewer.css?v=2">
+<link rel="stylesheet" href="kycast-viewer.css?v=3">
 </head>
 <body>
 <header id="top">
@@ -60,6 +60,14 @@
         <input type="range" id="opStorm" min="10" max="100" value="70" title="opacity">
       </div>
       <hr>
+      <div class="layer" id="satLayer">
+        <label class="sw"><input type="checkbox" id="lySat"><span></span>Satellite (live GOES-East)</label>
+        <div class="sub hidden" id="satSub">
+          <select id="satProd" title="Satellite product"></select>
+          <div class="oprow"><span>Opacity</span><input type="range" id="opSat" min="10" max="100" value="70" title="opacity"><b id="opSatV">70%</b></div>
+          <div id="satStat"><i id="satDot"></i><span id="satNote"></span><button id="satRef" title="Reload now" type="button">&#8635;</button></div>
+        </div>
+      </div>
       <div class="layer"><label class="sw"><input type="checkbox" id="lyCounty" checked><span></span>County lines</label></div>
       <div class="layer"><label class="sw"><input type="checkbox" id="lyTown" checked><span></span>Towns</label></div>
       <div class="layer">
@@ -125,5 +133,6 @@
 <noscript><p id="noscript">The viewer needs JavaScript.</p></noscript>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="kycast-viewer.js"></script>
+<script src="kycast-sat.js?v=1"></script>
 </body>
 </html>
