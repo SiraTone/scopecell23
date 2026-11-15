@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sounding Reader - CellScope Forecasting Tools</title>
+<meta name="description" content="Click anywhere in the US and read the latest weather-balloon hodograph in plain English. Free, public-domain NWS data. Educational, not a forecast.">
+<link rel="icon" href="favicon.ico?v=2" sizes="48x48">
+<link rel="icon" href="favicon.svg?v=2" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="soundlab.css?v=20261110">
+<link rel="stylesheet" href="hodograph.css?v=20261110">
+</head>
+<body>
+<header id="top">
+  <a id="brand" href="hodograph.html" aria-label="Sounding Reader"><img class="mark" src="hodograph-logo.svg" alt=""><span class="bn"><b>Sounding Reader</b><i>weather balloons, in plain English</i></span></a>
+  <nav id="crumbs" aria-label="Site"><a id="home" href="index.html">CellScope</a><span class="sep">/</span><a id="back" href="forecasting-tools.html">Forecasting Tools</a></nav>
+  <div id="chips"><span id="chipSup" class="chip hidden"></span><span id="chipCycle" class="chip"></span></div>
+</header>
+
+<section id="hWrap">
+  <div id="hMapWrap">
+    <div id="map"></div>
+    <div id="mapBar">
+      <label>Balloon launch
+        <select id="cycSel"></select>
+      </label>
+      <label>Or any past day
+        <input type="date" id="dayIn"><select id="hrIn"><option value="00">00Z</option><option value="12">12Z</option></select>
+        <button class="btn" id="dayGo">Go</button>
+      </label>
+      <label>Station <select id="stSel"><option value="">Pick a station...</option></select></label>
+    </div>
+    <div id="mapLegend">
+      <b>Dot colour = storm setup</b>
+      <span><i style="background:#5b6b82"></i>No storm fuel</span>
+      <span><i style="background:#4fd8c8"></i>Weak</span>
+      <span><i style="background:#ffd23f"></i>Some</span>
+      <span><i style="background:#ff9a3c"></i>Organised</span>
+      <span><i style="background:#ff4d4d"></i>Strong</span>
+      <span><i style="background:#e040fb"></i>Extreme</span>
+    </div>
+    <div id="mapMsg" class="hidden"></div>
+    <div id="mapPick" class="hidden"></div>
+  </div>
+
+  <aside id="reader">
+    <div id="welcome" class="card">
+      <h2>Read a weather balloon without a meteorology degree</h2>
+      <p>A hodograph is a picture of how the wind changes as you go up through the air. Weather balloons measure it twice a day from about 90 US sites.</p>
+      <ol>
+        <li><b>Click anywhere on the map.</b> You get the closest balloon site, each drawn as its own tiny hodograph.</li>
+        <li><b>Hover</b> any coloured line, dot or shaded area to see what it is.</li>
+        <li><b>Click</b> it to open a full explanation, with this site's real numbers.</li>
+      </ol>
+      <button class="btn big" id="tourBtn0" disabled>Pick a station first</button>
+      <p class="muted small">Data: National Weather Service balloon soundings (public domain), served by the Iowa State Mesonet. Educational only, and not a forecast. For warnings use the National Weather Service.</p>
+    </div>
+
+    <div id="stationView" class="hidden">
+      <div class="card" id="head">
+        <div class="hrow"><h2 id="stName"></h2><span id="stWhen" class="muted"></span></div>
+        <div id="verdict"></div>
+      </div>
+
+      <div class="card" id="hodoCard">
+        <div class="hrow">
+          <h3>The hodograph <span class="tag">hover and click</span></h3>
+          <div class="seg" id="unitSeg"><button data-u="kt" class="on">kt</button><button data-u="mph">mph</button></div>
+        </div>
+        <div id="svgWrap"></div>
+        <div class="toggles">
+          <label class="sw"><input type="checkbox" id="tgSrh" checked><span></span>Spin area</label>
+          <label class="sw"><input type="checkbox" id="tgShear" checked><span></span>Shear arrow</label>
+          <label class="sw"><input type="checkbox" id="tgKm" checked><span></span>Height dots</label>
+          <button class="btn" id="tourBtn">Walk me through it</button>
+        </div>
+        <div id="layerKey"></div>
+      </div>
+
+      <div class="card" id="sndCard">
+        <div class="hrow">
+          <h3>The sounding <span class="tag">hover and click</span></h3>
+          <span class="hbtns"><button class="btn" id="sndTourBtn" disabled>Walk me through it</button> <button class="btn" id="labBtn" disabled>Open full sounding</button></span>
+        </div>
+        <div class="muted small" style="margin:2px 0 6px">The other half of the balloon's data: how warm and how moist the air is at every height. This is the fuel side of a storm; the hodograph above is the wind side.</div>
+        <div id="sndWrap"></div>
+        <div id="sndSum"></div>
+      </div>
+
+      <div class="card" id="meters">
+        <h3>The ingredients <span class="tag">click a bar</span></h3>
+        <div id="meterRows"></div>
+      </div>
+
+      <div class="card" id="shapeCard">
+        <h3>Shape of this hodograph</h3>
+        <div id="shapeBody"></div>
+      </div>
+
+      <p class="muted small" id="foot"></p>
+    </div>
+    <div class="card hidden" id="supCard"></div>
+  </aside>
+</section>
+
+<div id="tip" class="hidden"></div>
+<div id="modal" class="hidden" role="dialog" aria-modal="true">
+  <div id="mBox">
+    <button id="mClose" aria-label="Close">&times;</button>
+    <div id="mBody"></div>
+    <div id="mNav" class="hidden"><button class="btn" id="mPrev">Back</button><span id="mStep"></span><button class="btn" id="mNext">Next</button></div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="hodo-cities.js?v=20261110"></script>
+<script src="hodo-data.js?v=20261110"></script>
+<script src="soundlab-calc.js?v=20261110"></script>
+<script src="soundlab.js?v=20261110"></script>
+<script src="sounding.js?v=20261110"></script>
+<script src="hodograph.js?v=20261110"></script>
+</body>
+</html>

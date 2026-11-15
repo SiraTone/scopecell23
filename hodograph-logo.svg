@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Sounding Reader">
+  <defs>
+    <linearGradient id="hg" gradientUnits="userSpaceOnUse" x1="18" y1="48" x2="48" y2="14">
+      <stop offset="0" stop-color="#ff5a5a"/><stop offset=".3" stop-color="#ff9a3c"/><stop offset=".55" stop-color="#ffd23f"/><stop offset=".78" stop-color="#4ade80"/><stop offset="1" stop-color="#38bdf8"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="15" fill="#0b121d"/>
+  <g fill="none" stroke="#24344e" stroke-width="1.4">
+    <circle cx="30" cy="34" r="9"/><circle cx="30" cy="34" r="18"/><circle cx="30" cy="34" r="27"/>
+    <path d="M30 5v58M1 34h58" stroke-width="1"/>
+  </g>
+  <path d="M19 47C17 38 22 31 30 31C38 31 40 25 46 17" fill="none" stroke="url(#hg)" stroke-width="4.6" stroke-linecap="round"/>
+  <circle cx="19" cy="47" r="3" fill="#0b121d" stroke="#ff5a5a" stroke-width="2"/>
+  <circle cx="46" cy="17" r="3.4" fill="#e8f1ff"/>
+</svg>
