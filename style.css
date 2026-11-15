@@ -11,6 +11,8 @@ a{color:inherit}
 .mono{font-family:var(--mono);font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
 header{border-bottom:1px solid var(--rule)}
 header .wrap{display:flex;justify-content:space-between;align-items:center;height:60px}
+header .wrap{max-width:1060px}
+nav a{white-space:nowrap}
 .brand{font-weight:700;letter-spacing:-.01em;text-decoration:none;font-family:var(--serif);font-size:1.25rem}
 nav a{margin-left:22px;text-decoration:none;color:var(--mute);font-size:.92rem}
 nav a:hover{color:var(--ink)}
@@ -175,3 +177,9 @@ nav a.on{color:var(--ink);border-bottom:2px solid var(--accent);padding-bottom:3
 .studies .locked .mono{color:var(--accent)}
 .studies .locked .mini{display:block;margin-top:10px;font:600 1.15rem var(--mono);font-variant-numeric:tabular-nums;color:var(--ink)}
 @media(max-width:720px){.lock .cd div{min-width:70px}.lock .cd b{font-size:1.8rem}}
+@media (max-width:1000px){
+  header .wrap{flex-wrap:wrap;height:auto;padding-top:12px;padding-bottom:10px;gap:8px}
+  header nav{width:100%;display:flex;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}
+  header nav::-webkit-scrollbar{display:none}
+  header nav a:first-child{margin-left:0}
+}
