@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Was Mayfield EF5-Strength? - CellScope Case Study</title>
+<meta name="description" content="An independent NIST tree-fall model puts the December 10, 2021 Mayfield tornado's peak winds near 205 mph. Why it is still officially EF4, and what the evidence can and cannot show.">
+<meta property="og:title" content="Was Mayfield EF5-Strength? - CellScope Case Study">
+<meta property="og:description" content="An independent NIST tree-fall model puts the December 10, 2021 Mayfield tornado's peak winds near 205 mph. Why it is still officially EF4.">
+<meta property="og:image" content="https://cellscope.live/og.png">
+<link rel="icon" href="../favicon.ico?v=2" sizes="48x48">
+<link rel="icon" href="../favicon.svg?v=2" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png?v=2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css?v=20261115">
+<style>
+.chart{width:100%;height:auto;display:block;border:1px solid var(--rule);background:var(--panel)}
+.chart text{font-family:var(--mono);font-size:11px;fill:var(--mute)}
+.chart .bar{fill:var(--accent)}
+.chart .ax{stroke:var(--rule);stroke-width:1}
+.chart .ef5{stroke:var(--ink);stroke-width:2}
+.chart .off{stroke:var(--mute);stroke-width:2;stroke-dasharray:5 4}
+.chart .lbl{fill:var(--ink)}
+table.cmp{width:100%;border-collapse:collapse;font-size:.92rem;margin:18px 0}
+table.cmp th,table.cmp td{border-bottom:1px solid var(--rule);padding:8px 10px;text-align:left;vertical-align:top}
+table.cmp th{font-family:var(--mono);font-size:.78rem;color:var(--mute);font-weight:500}
+table.cmp tr.hi td{color:var(--accent)}
+.tblwrap{overflow-x:auto}
+blockquote{margin:20px 0;padding:6px 20px;border-left:3px solid var(--accent);background:var(--panel)}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <a class="brand" href="../index.html" aria-label="CellScope"><img src="../cellscope-horizontal-ondark.svg?v=2" alt="CellScope" height="34"></a>
+  <nav><a href="../kycast.html">Research</a><a href="../kycast-viewer.html">Live model</a><a href="../products.html">Products</a><a href="../forecasting-tools.html">Forecasting Tools</a><a href="../flight.html">Flight</a><a href="../case-studies.html" class="on" aria-current="page">Case Studies</a><a href="../newsletter.html">Newsletter</a><a href="../fred.html">FRED</a></nav>
+</div></header>
+
+<main class="wrap">
+<article class="page study">
+  <span class="tag">CASE STUDY</span>
+  <p class="mono">Violent tornado &middot; Dec 10-11, 2021 &middot; Western Kentucky</p>
+  <h1>Was the Mayfield tornado EF5-strength?</h1>
+  <p class="sub">An independent NIST tree-fall model puts the peak winds in Mayfield near 205 mph, at the EF5 line. The tornado is still officially EF4, and the reason says more about the EF scale than about the storm.</p>
+
+  <div class="facts">
+    <div><b>EF4</b><span>Official rating</span></div>
+    <div><b>190 mph</b><span>Official peak estimate</span></div>
+    <div><b>~205 mph</b><span>NIST tree-fall best fit</span></div>
+    <div><b>165.7 mi</b><span>Path length</span></div>
+  </div>
+
+  <h2>The short answer</h2>
+  <p>By an independent tree-fall method, Mayfield's winds were comparable to the estimated winds of official EF5 tornadoes. An earlier version of the same method underrated the Joplin EF5 by a full category. But the EF scale rates <em>damage</em>, not wind, and Mayfield had no EF5-qualifying structure in its path to record it. So: EF5-strength winds were plausible, likely even. EF5 is not proven.</p>
+
+  <h2>What the official survey found</h2>
+  <p>NWS Paducah rated one continuous tornado, from northwest Tennessee to Grayson County, Kentucky: EF4, 190 mph peak, 165.7 miles long, up to 1.13 miles wide. Mayfield and Dawson Springs were hit by the same tornado. The 190 mph value was assigned to a house near Bremen in Muhlenberg County. Mayfield's highest points were about 188 mph.</p>
+  <p>The well-known structures did not set the peak. The candle factory, a metal building system, failed at an estimated ~155 mph. The Mayfield water tower toppled, with anchor rods broken or pulled up to 76 cm out of the piers, but the engineering committee's consensus for a toppled water tower is only about 130 mph. The Windhaven Apartments had intact, properly installed anchor bolts that the wall plates were pulled over, rated at about 180 mph.</p>
+  <p>The survey paper, with Haag Engineering and NWS authors, states the key point directly:</p>
+  <blockquote>"The NWS rated this tornado as a high-end EF4. The tornado damage rating might have been higher had more wind resistant structures been encountered."</blockquote>
+  <p>It also notes the tornado's fast forward motion (about 60 mph) gave little dwell time of strong winds over any one building.</p>
+
+  <h2>The independent evidence: NIST tree-fall winds</h2>
+  <p>In 2023, NIST released modeled wind histories for 44 damaged houses near downtown Mayfield. The method fits an idealized vortex to the directions trees fell, using radar for the tornado's forward speed and structural damage for its core size. We downloaded the dataset and read the numbers directly.</p>
+
+  <figure>
+    <svg class="chart" viewBox="0 0 600 250" role="img" aria-label="Histogram of 48 NIST best-matching fits of Mayfield peak wind, 186 to 213 mph. 26 of 48 exceed 200 mph.">
+      <line class="ax" x1="50" y1="200" x2="590" y2="200"/>
+      <rect class="bar" x="62" y="177.1" width="80" height="22.9"/>
+      <rect class="bar" x="148.7" y="108.6" width="80" height="91.4"/>
+      <rect class="bar" x="235.3" y="62.9" width="80" height="137.1"/>
+      <rect class="bar" x="322" y="177.1" width="80" height="22.9"/>
+      <rect class="bar" x="408.7" y="85.7" width="80" height="114.3"/>
+      <rect class="bar" x="495.3" y="40" width="80" height="160"/>
+      <text x="102" y="172" text-anchor="middle">2</text>
+      <text x="188.7" y="103" text-anchor="middle">8</text>
+      <text x="275.3" y="57" text-anchor="middle">12</text>
+      <text x="362" y="172" text-anchor="middle">2</text>
+      <text x="448.7" y="80" text-anchor="middle">10</text>
+      <text x="535.3" y="35" text-anchor="middle">14</text>
+      <line class="off" x1="146.7" y1="20" x2="146.7" y2="200"/>
+      <line class="ef5" x1="320" y1="20" x2="320" y2="200"/>
+      <text class="lbl" x="150" y="30">official 190</text>
+      <text class="lbl" x="324" y="30">EF5 line 200</text>
+      <text x="60" y="218" text-anchor="middle">185</text>
+      <text x="146.7" y="218" text-anchor="middle">190</text>
+      <text x="233.3" y="218" text-anchor="middle">195</text>
+      <text x="320" y="218" text-anchor="middle">200</text>
+      <text x="406.7" y="218" text-anchor="middle">205</text>
+      <text x="493.3" y="218" text-anchor="middle">210</text>
+      <text x="580" y="218" text-anchor="middle">215</text>
+      <text x="320" y="242" text-anchor="middle">Peak tornado wind, mph (count of best-matching fits)</text>
+    </svg>
+    <figcaption>The 48 best-matching fits in NIST dataset mds2-3025, binned by peak wind. 26 of 48 exceed 200 mph; the median is 203 mph; the single best fit is ~205 mph.</figcaption>
+  </figure>
+
+  <ul class="limits">
+    <li>Peak wind across all 48 fits: <b>186-213 mph</b>. Best fit: <b>~205 mph</b>. Median: <b>203 mph</b>.</li>
+    <li><b>26 of 48</b> fits exceed 200 mph; 46 of 48 reach at least 190 mph.</li>
+    <li>Highest single house (MF7): ~204 mph in the best fit, 184-212 mph across fits.</li>
+    <li>Fitted core: radius of maximum wind 140-145 m, forward speed 26-28 m/s.</li>
+  </ul>
+
+  <h3>What the answer depends on</h3>
+  <p>The result hinges on how strong the model assumes the trees were. Fits that assume trees fall at 32.5 m/s (73 mph) peak at 186-198 mph. At 35 m/s (78 mph) they peak at 193-213 mph. At 37.5 m/s (84 mph), 213 mph. The question "was it 200+?" largely reduces to "how strong were Mayfield's trees?"</p>
+
+  <h2>Compared with official EF5s</h2>
+  <p>The same family of tree-fall methods has been tested on the 2011 Joplin tornado, an official EF5. Godfrey et al. (2020) found the original Lombardo method "underestimates the maximum wind speeds by a full EF-scale level" there. NIST used an improved version (Rhee and Lombardo, 2018) with a different tree-strength assumption, so this is suggestive, not exact. It does mean Mayfield's ~205 mph is unlikely to be an overestimate from method bias.</p>
+  <div class="tblwrap"><table class="cmp">
+    <tr><th>Tornado</th><th>Rating</th><th>Estimated peak</th><th>Basis</th></tr>
+    <tr><td>Greensburg KS, 2007</td><td>EF5</td><td>205 mph</td><td>Damage survey</td></tr>
+    <tr><td>Joplin MO, 2011</td><td>EF5</td><td>200+ mph</td><td>Damage survey</td></tr>
+    <tr class="hi"><td>Mayfield KY, 2021</td><td>EF4</td><td>190 mph official; ~205 mph modeled</td><td>Damage survey; NIST tree-fall model</td></tr>
+  </table></div>
+  <p>Damage-based and tree-fall estimates are different kinds of numbers, so this compares orders of magnitude, not exact values.</p>
+
+  <h2>What radar can and cannot add</h2>
+  <p>We pulled the KPAH (Paducah) Level-II volumes from 03:05 to 03:58 UTC and dealiased the velocities. The tornado couplet over Mayfield peaks in the 03:29:39 UTC scan, about 37 km from the radar, where the lowest beam is roughly 400 m above ground. Rotational velocity there is roughly <b>70-90 kt</b> (our own analysis, conservative to unfiltered). That matches SPC's real-time note that sustained Vrot above 70 kt implied 150-190 mph winds.</p>
+  <p>But the beam is about 600 m wide at that range, several times the tornado's ~140 m core radius. Radar confirms a violent tornado and cannot separate EF4 from EF5.</p>
+
+  <h2>What about the derailed train?</h2>
+  <p>A CSX train derailed near Earlington in Hopkins County, with some cars pushed up an embankment. Railcars helped upgrade the 2025 Enderlin, ND tornado to EF5, where loaded cars and a tanker were thrown and analyzed. For this derailment, no source we found gives car weights, loads or displacement geometry, and CSX said the cars were empty. Empty cars tip at far lower winds. It cannot carry a wind speed.</p>
+
+  <h2>Takeaways</h2>
+  <ul class="limits">
+    <li>Officially EF4 (190 mph peak). The survey authors themselves say the rating "might have been higher had more wind resistant structures been encountered."</li>
+    <li>An independent NIST tree-fall model puts peak winds near 205 mph (186-213), with 26 of 48 fits above 200 mph. EF5-strength winds were plausible, even likely.</li>
+    <li>It is not proven. The model depends on an assumed tree strength, its averaging time is not stated, and the NIST technical note describing the method is not yet published.</li>
+    <li>Mayfield shows a gap in damage-based rating: a tornado can only be rated as high as the strongest thing it destroys.</li>
+  </ul>
+
+  <h2>Sources</h2>
+  <ul class="sources">
+    <li><a href="https://ams.confex.com/ams/30SLS/mediafile/Manuscript/Paper407208/AMS-MAYFIELD_FINAL.pdf">Marshall, Wienhoff, Smith and Wielgos: Damage Survey of the Mayfield, KY Tornado (AMS 30th SLS)</a></li>
+    <li><a href="https://data.nist.gov/od/id/mds2-3025">NIST mds2-3025: Wind speed estimates of the Quad-State Tornado in Mayfield, KY based on treefall pattern analysis (Rhee, Levitan, LaDue)</a></li>
+    <li><a href="https://weather.gov/pah/December-10th-11th-2021-Tornado">NWS Paducah: December 10-11, 2021 tornado event</a></li>
+    <li><a href="https://www.weather.gov/media/publications/assessments/NWS_Joint_Regional_Service_Assessment_Dec_10-11_2021.pdf">NWS Joint Regional Service Assessment, Dec 10-11, 2021</a></li>
+    <li><a href="https://www.atms.unca.edu/cgodfrey/pubs/2020AMSSLS_Godfrey_etal.pdf">Godfrey et al. (2020): A comparison of three wind speed estimation techniques based on tornado-induced treefall patterns</a></li>
+    <li><a href="https://www.spc.noaa.gov/efscale/ef-ttu.pdf">A Recommendation for an Enhanced Fujita Scale (Texas Tech)</a></li>
+    <li><a href="https://www.weather.gov/media/fgf/Enderlin.pdf">NWS Grand Forks: Enderlin, ND tornado upgrade</a></li>
+    <li><a href="https://www.trains.com/trn/news-reviews/news-wire/tornado-derails-train-in-kentucky-one-car-hits-house">Trains News Wire: Tornado derails train in Kentucky</a></li>
+    <li>NEXRAD Level-II, KPAH, 2021-12-11 03:05-03:58 UTC (Unidata/AWS open data), analyzed with Py-ART</li>
+  </ul>
+</article>
+</main>
+
+<footer><div class="wrap">
+  <span>Case studies are retrospective analysis and are not forecasts. For warnings and emergencies, use the National Weather Service and your local officials.</span>
+  <span>&copy; 2026 CellScope</span>
+</div></footer>
+</body>
+</html>
