@@ -1,0 +1,28 @@
+{
+ "product": "CS-SVR",
+ "run_utc": "2026-11-28T06:00:00Z",
+ "peaks": {
+  "wind": 0.05605529951980327,
+  "hail": 0.0013501303119119257,
+  "sig_wind": 0.002918466995470226,
+  "sig_hail": 7.52442647353746e-05
+ },
+ "w_hrrr": null,
+ "published": "2026-11-28T09:44:01Z",
+ "schedule": {
+  "cycles_utc": [
+   0,
+   6,
+   12,
+   18
+  ],
+  "check": "hourly",
+  "typical_lag_h": 4.5
+ },
+ "frames": [
+  "hz_hail.png",
+  "hz_sig_hail.png",
+  "hz_sig_wind.png",
+  "hz_wind.png"
+ ]
+}
